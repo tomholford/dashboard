@@ -1,5 +1,336 @@
-require=function(r,e,n){function t(n,o){function i(r){return t(i.resolve(r))}function f(e){return r[n][1][e]||e}if(!e[n]){if(!r[n]){var c="function"==typeof require&&require;if(!o&&c)return c(n,!0);if(u)return u(n,!0);var l=new Error("Cannot find module '"+n+"'");throw l.code="MODULE_NOT_FOUND",l}i.resolve=f;var a=e[n]=new t.Module;r[n][0].call(a.exports,i,a,a.exports)}return e[n].exports}function o(){this.bundle=t,this.exports={}}var u="function"==typeof require&&require;t.Module=o,t.modules=r,t.cache=e,t.parent=u;for(var i=0;i<n.length;i++)t(n[i]);return t}({5:[function(require,module,exports) {
+// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
+
+// eslint-disable-next-line no-global-assign
+require = (function (modules, cache, entry) {
+  // Save the require from previous bundle to this closure if any
+  var previousRequire = typeof require === "function" && require;
+
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire = typeof require === "function" && require;
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
+        }
+
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
+
+        var err = new Error('Cannot find module \'' + name + '\'');
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
+      
+      localRequire.resolve = resolve;
+
+      var module = cache[name] = new newRequire.Module;
+
+      modules[name][0].call(module.exports, localRequire, module, module.exports);
+    }
+
+    return cache[name].exports;
+
+    function localRequire(x){
+      return newRequire(localRequire.resolve(x));
+    }
+
+    function resolve(x){
+      return modules[name][1][x] || x;
+    }
+  }
+
+  function Module() {
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+
+  for (var i = 0; i < entry.length; i++) {
+    newRequire(entry[i]);
+  }
+
+  // Override the current require with this new one
+  return newRequire;
+})({5:[function(require,module,exports) {
+var bundleURL = null;
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error;
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
 
 },{}],4:[function(require,module,exports) {
-"use strict";require("./index.sass");var e="16793c2cd11658bc4be9dc7d5fa5c848",n="https://api.openweathermap.org/data/2.5/weather?zip=94114,us&units=imperial&appid="+e;function t(e){e.json().then(function(e){var n=e.main.temp,t=e.main.temp_min,i=e.main.temp_max;document.getElementById("current").innerText=n+" F",document.getElementById("low").innerText=t+" F",document.getElementById("high").innerText=i+" F"})}function i(e){}function a(){var e=new Request(n);fetch(e,{method:"GET",cache:"no-cache"}).then(t,i)}document.addEventListener("DOMContentLoaded",function(){a()});
-},{"./index.sass":5}]},{},[4])
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+  newLink.onload = function () {
+    link.remove();
+  };
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+
+},{"./bundle-url":5}],3:[function(require,module,exports) {
+
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+},{"_css_loader":4}],2:[function(require,module,exports) {
+"use strict";
+
+require("./index.sass");
+
+var WEATHER_API_KEY_T = '16793c2cd11658bc4be9dc7d5fa5c848';
+var WEATHER_API_ENDPOINT_T = 'https://api.openweathermap.org/data/2.5/weather?zip=94114,us&units=imperial&appid=' + WEATHER_API_KEY_T;
+var WEATHER_API_KEY_A = 'be3c12cf8c96fa59063516f00d1a95b7';
+var WEATHER_API_ENDPOINT_A = 'https://api.openweathermap.org/data/2.5/weather?id=1850144&units=imperial&appid=' + WEATHER_API_KEY_A;
+
+// function handleWeatherSuccess(response, initial, unit) {
+//   // var initial = ['t', 'a'];
+//   // var unit = 'F';
+//   response.json().then(function(data) {
+//     var currentTemp = data['main']['temp'];
+//     var forecastLow = data['main']['temp_min'];
+//     var forecastHigh = data['main']['temp_max'];
+//     var unitDivider = unit;
+//     var initialHere = initial;
+//
+//     document.getElementById('current-' + initialHere).innerText = currentTemp + unitDivider;
+//     document.getElementById('low-' + initialHere).innerText = forecastLow + unitDivider;
+//     document.getElementById('high-' + initialHere).innerText = forecastHigh + unitDivider;
+//     console.log(data);
+//   })
+// }
+
+
+function handleWeatherSuccess_t(response) {
+  response.json().then(function (data) {
+    var currentTemp = data['main']['temp'];
+    var forecastLow = data['main']['temp_min'];
+    var forecastHigh = data['main']['temp_max'];
+
+    document.getElementById('current-t').innerText = currentTemp + ' F';
+    document.getElementById('low-t').innerText = forecastLow + ' F';
+    document.getElementById('high-t').innerText = forecastHigh + ' F';
+    console.log(data);
+  });
+}
+
+function handleWeatherSuccess_a(response) {
+  response.json().then(function (data) {
+    var currentTemp = data['main']['temp'];
+    var forecastLow = data['main']['temp_min'];
+    var forecastHigh = data['main']['temp_max'];
+
+    document.getElementById('current-a').innerText = currentTemp + ' F';
+    document.getElementById('low-a').innerText = forecastLow + ' F';
+    document.getElementById('high-a').innerText = forecastHigh + ' F';
+    console.log(data);
+  });
+}
+
+function handleWeatherError(response) {
+  console.log(response);
+}
+
+function queryWeatherApi() {
+  var options = {
+    method: 'GET',
+    cache: 'no-cache'
+  };
+
+  var request_t = new Request(WEATHER_API_ENDPOINT_T);
+  var request_a = new Request(WEATHER_API_ENDPOINT_A);
+
+  // fetch(request_t, options).then(handleWeatherSuccess(response, "t", "F"), handleWeatherError);
+  // fetch(request_a, options).then(handleWeatherSuccess(response, "a", "F"), handleWeatherError);
+  fetch(request_t, options).then(handleWeatherSuccess_t, handleWeatherError);
+  fetch(request_a, options).then(handleWeatherSuccess_a, handleWeatherError);
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+  queryWeatherApi();
+});
+},{"./index.sass":3}],0:[function(require,module,exports) {
+var global = (1, eval)('this');
+var OldModule = module.bundle.Module;
+function Module() {
+  OldModule.call(this);
+  this.hot = {
+    accept: function (fn) {
+      this._acceptCallback = fn || function () {};
+    },
+    dispose: function (fn) {
+      this._disposeCallback = fn;
+    }
+  };
+}
+
+module.bundle.Module = Module;
+
+if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
+  var ws = new WebSocket('ws://' + window.location.hostname + ':40085/');
+  ws.onmessage = function(event) {
+    var data = JSON.parse(event.data);
+
+    if (data.type === 'update') {
+      data.assets.forEach(function (asset) {
+        hmrApply(global.require, asset);
+      });
+
+      data.assets.forEach(function (asset) {
+        if (!asset.isNew) {
+          hmrAccept(global.require, asset.id);
+        }
+      });
+    }
+
+    if (data.type === 'reload') {
+      ws.close();
+      ws.onclose = function () {
+        window.location.reload();
+      }
+    }
+
+    if (data.type === 'error-resolved') {
+      console.log('[parcel] ✨ Error resolved');
+    }
+
+    if (data.type === 'error') {
+      console.error('[parcel] 🚨  ' + data.error.message + '\n' + 'data.error.stack');
+    }
+  };
+}
+
+function getParents(bundle, id) {
+  var modules = bundle.modules;
+  if (!modules) {
+    return [];
+  }
+
+  var parents = [];
+  var k, d, dep;
+
+  for (k in modules) {
+    for (d in modules[k][1]) {
+      dep = modules[k][1][d];
+      if (dep === id || (Array.isArray(dep) && dep[dep.length - 1] === id)) {
+        parents.push(+k);
+      }
+    }
+  }
+
+  if (bundle.parent) {
+    parents = parents.concat(getParents(bundle.parent, id));
+  }
+
+  return parents;
+}
+
+function hmrApply(bundle, asset) {
+  var modules = bundle.modules;
+  if (!modules) {
+    return;
+  }
+
+  if (modules[asset.id] || !bundle.parent) {
+    var fn = new Function('require', 'module', 'exports', asset.generated.js);
+    asset.isNew = !modules[asset.id];
+    modules[asset.id] = [fn, asset.deps];
+  } else if (bundle.parent) {
+    hmrApply(bundle.parent, asset);
+  }
+}
+
+function hmrAccept(bundle, id) {
+  var modules = bundle.modules;
+  if (!modules) {
+    return;
+  }
+
+  if (!modules[id] && bundle.parent) {
+    return hmrAccept(bundle.parent, id);
+  }
+
+  var cached = bundle.cache[id];
+  if (cached && cached.hot._disposeCallback) {
+    cached.hot._disposeCallback();
+  }
+
+  delete bundle.cache[id];
+  bundle(id);
+
+  cached = bundle.cache[id];
+  if (cached && cached.hot && cached.hot._acceptCallback) {
+    cached.hot._acceptCallback();
+    return true;
+  }
+
+  return getParents(global.require, id).some(function (id) {
+    return hmrAccept(global.require, id)
+  });
+}
+},{}]},{},[0,2])
