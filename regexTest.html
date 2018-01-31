@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+  <p>testing for regex in console</p>
+</body>
+</html>
+
+<script type="text/javascript">
+
+  // Test string
+  const urlString = '<center><! MAIN HEADLINE><font FACE="ARIAL,VERDANA,HELVETICA"><font size="+7"><IMG SRC="https://pbs.twimg.com/media/DT9AqRlUQAAQFw4.jpg"width=495><BR><A HREF="https://www.cnbc.com/2018/01/19/government-shutdown-bill-fails-in-senate-after-house-passes-plan.html"><font color=red>SHUTDOWN 2018</font></A></div></div>';
+  // Regex pattern to search for
+  const regexExample = /<! MAIN HEADLINE.*\/A>/ig
+
+  // *** Still testing ***
+  // const url = "http://www.drudgereport.com/";
+  // const result = regexExample.exec(url);
+  // const blanks = '';
+
+  // Function for matching regex pattern
+  function consoleMatcher (str, regex) {
+    return str.match(regex);
+  };
+
+  console.log(consoleMatcher(urlString, regexExample));
+
+  // *** I forgot what I was trying to do here lol ***
+  // console.log(result());
+</script>
