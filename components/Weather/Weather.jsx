@@ -1,18 +1,19 @@
 import React from 'react';
 
-const Weather = () => {
-  return (
-    <div>
-      <h1>Weather</h1>
-      <h2>{this.props.city}</h2>
-      <h3>current</h3>
-      <p>{this.props.currentTemp}</p>
-      <h3>forecast low</h3>
-      <p>{this.props.forecastLow}</p>
-      <h3>forecase high</h3>
-      <p>{this.props.forecastHigh}</p>
-    </div>
-  );
-};
+class Weather extends React.Component {
+  render() {
+    return (
+      <div>
+        <h2>{this.props.name}</h2>
+        <h3>current</h3>
+        <p>{this.props.currentTemp} {this.props.unit}</p>
+        <h3>low</h3>
+        <p>{this.props.forecastLow} {this.props.unit}</p>
+        <h3>high</h3>
+        <p>{this.props.forecastHigh} {this.props.unit}</p>
+      </div>
+    );
+  }
+}
 
 export default Weather;
