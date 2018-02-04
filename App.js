@@ -3,6 +3,10 @@ import Weather from './components/Weather/Weather';
 
 const cities = [
   {
+    "id": 1850144,
+    "unit": "C"
+  },
+  {
     "id": 5391959,
     "unit": "F"
   }

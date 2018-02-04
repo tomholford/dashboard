@@ -7,24 +7,36 @@ class Weather extends React.Component {
     super(props);
 
     this.state = {
+      loaded: false,
       weather: {}
     };
   }
 
   componentDidMount() {
-      var options = {
-        method: 'GET',
-        cache: 'no-cache'
-      };
+    let options = {
+      method: 'GET',
+      cache: 'no-cache'
+    };
 
-      var request = new Request(`https://api.openweathermap.org/data/2.5/weather?id=${this.props.cityId}&units=imperial&appid=${WEATHER_API_KEY}`);
+    let units = this.props.unit === 'F' ? 'imperial' : 'metric';
 
-      fetch(request, options).then(handleWeatherSuccess, handleWeatherError);
+    let request = new Request(`https://api.openweathermap.org/data/2.5/weather?id=${this.props.cityId}&units=${units}&appid=${WEATHER_API_KEY}`);
+
+    fetch(request, options).then((response) => {
+      response.json().then((data) => {
+        this.setState({weather: data, loaded: true})
+      })
+    }, (response) => {
+      console.log(response);
+    });
   }
 
   render() {
-    return (
-      <div>
+    const isLoaded = this.state.loaded;
+
+    let output = null;
+    if (isLoaded) {
+      output = <div>
         <h2>{this.state.weather.name}</h2>
         <h3>current</h3>
         <p>{this.state.weather.main.temp} {this.props.unit}</p>
@@ -33,18 +45,13 @@ class Weather extends React.Component {
         <h3>high</h3>
         <p>{this.state.weather.main.temp_max} {this.props.unit}</p>
       </div>
-    );
-  }
+    } else {
+      output = <p>Loading...</p>;
+    }
 
-  handleWeatherSuccess(response) {
-    response.json().then(function(data) {
-      this.setState({ data })
-      console.log(data);
-    })
-  }
-
-  handleWeatherError(response) {
-    console.log(response);
+    return (<div>
+      {output}
+    </div>);
   }
 }
 
