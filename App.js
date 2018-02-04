@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import City from './components/City/City';
+import './App.sass';
 
 const cities = [
   {
@@ -26,14 +27,18 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({ cities });
+    this.setState({cities});
   }
 
   render() {
     return (
-      this.state.cities.map(function(city, index){
-        return <City key={index} city={city} />;
-      })
+      <div className="app-container">
+        {
+          this.state.cities.map(function(city, index) {
+            return <City key={index} city={city}/>
+          })
+        }
+      </div>
     );
   }
 }

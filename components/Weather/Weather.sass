@@ -4,10 +4,26 @@ div.current-conditions-container
   align-items: center
   justify-content: flex-start
 
+  div
+    flex: 2
+    text-align: center
+
 div.forecast-container
   display: flex
   flex-flow: row nowrap
   justify-content: space-around
 
   div.forecast
-    width: 100px
+    display: flex
+    flex-flow: column nowrap
+    align-items: center
+    justify-content: space-around
+
+h1.current-temp
+  text-align: center
+  color: rgba(0,0,0,0.7);
+
+h2.city-name
+  text-align: center
+  text-transform: uppercase
+  font-weight: normal

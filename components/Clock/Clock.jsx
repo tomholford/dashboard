@@ -1,4 +1,5 @@
 import React from 'react';
+import './Clock.sass';
 
 class Clock extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Clock extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="clock-container">
         <h4>{this.state.date.toLocaleTimeString(this.props.locale, { timeZone: this.props.timezone })}</h4>
       </div>
     );

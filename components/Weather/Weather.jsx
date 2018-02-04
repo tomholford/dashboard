@@ -41,24 +41,25 @@ class Weather extends React.Component {
       const weather = this.state.weather;
       const iconUrl = `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
 
-      output = <div>
-        <h2>{weather.name}</h2>
-        <div className="current-conditions-container">
-          <span>{weather.main.temp} {this.props.unit}</span>
-          <img src={iconUrl} alt=""/>
-          <span>{weather.weather[0].description}</span>
-        </div>
-        <div className="forecast-container">
-          <div className="forecast">
-            <h4>Low</h4>
-            <p>{weather.main.temp_min} {this.props.unit}</p>
+      output =
+        <div>
+          <h1 className="current-temp">{weather.main.temp} {this.props.unit}</h1>
+          <h2 className="city-name">{weather.name}</h2>
+          <div className="current-conditions-container">
+            <img src={iconUrl} alt=""/>
+            <div>{weather.weather[0].description}</div>
           </div>
-          <div className="forecast">
-            <h4>High</h4>
-            <p>{weather.main.temp_max} {this.props.unit}</p>
+          <div className="forecast-container">
+            <div className="forecast">
+              <h4>Low</h4>
+              <p>{weather.main.temp_min} {this.props.unit}</p>
+            </div>
+            <div className="forecast">
+              <h4>High</h4>
+              <p>{weather.main.temp_max} {this.props.unit}</p>
+            </div>
           </div>
         </div>
-      </div>
     } else {
       output = <p>Loading...</p>;
     }
