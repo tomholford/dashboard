@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import Weather from './components/Weather/Weather';
+import City from './components/City/City';
 
 const cities = [
   {
     "id": 1850144,
-    "unit": "C"
+    "unit": "C",
+    "locale": "ja-JP",
+    "timezone": "Asia/Tokyo"
   },
   {
     "id": 5391959,
-    "unit": "F"
+    "unit": "F",
+    "locale": "en-US",
+    "timezone": "America/Los_Angeles"
   }
 ];
 
@@ -28,7 +32,7 @@ class App extends Component {
   render() {
     return (
       this.state.cities.map(function(city, index){
-        return <Weather key={index} cityId={city.id} unit={city.unit} />
+        return <City key={index} city={city} />;
       })
     );
   }
