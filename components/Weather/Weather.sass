@@ -1,29 +1,37 @@
-div.current-conditions-container
-  display: flex
-  flex-flow: row nowrap
-  align-items: center
-  justify-content: flex-start
+div.top-tab-container
 
-  div
-    flex: 2
-    text-align: center
+  h2
+    margin: 0
+    font-size: 1.2em
+    text-transform: uppercase
+    font-weight: normal
+
+  div.conditions-container
+    display: flex
+    flex-flow: row nowrap
+    align-items: center
+    justify-content: flex-start
+    border-bottom: 1px solid #c7c7c7
+
+    div
+      flex: 2
+      text-align: left
+      font-size: 0.9em
 
 div.forecast-container
   display: flex
   flex-flow: row nowrap
-  justify-content: space-around
+  justify-content: space-evenly
 
-  div.forecast
-    display: flex
-    flex-flow: column nowrap
-    align-items: center
-    justify-content: space-around
-
-h1.current-temp
+h3.current-temp
+  font-size: 2.5em
   text-align: center
-  color: rgba(0,0,0,0.7);
-
-h2.city-name
-  text-align: center
-  text-transform: uppercase
+  color: rgba(0,0,0,0.65)
   font-weight: normal
+
+div.forecast
+  display: flex
+  flex-flow: column nowrap
+  align-items: center
+  justify-content: space-around
+  font-size: 1.1em
