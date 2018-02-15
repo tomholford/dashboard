@@ -3,71 +3,87 @@ import './Weather.sass'
 
 const WEATHER_API_KEY = '16793c2cd11658bc4be9dc7d5fa5c848';
 
-class Weather extends React.Component {
+class WeatherList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       loaded: false,
-      weather: {}
+      cities: []
     };
   }
 
-  componentDidMount() {
+  getCityData(city) {
+    let units = city.unit === 'F' ? 'imperial' : 'metric';
     let options = {
       method: 'GET',
       cache: 'no-cache'
     };
-
-    let units = this.props.unit === 'F' ? 'imperial' : 'metric';
-
-    let request = new Request(`https://api.openweathermap.org/data/2.5/weather?id=${this.props.cityId}&units=${units}&appid=${WEATHER_API_KEY}`);
+    let request = new Request(`https://api.openweathermap.org/data/2.5/weather?id=${city.id}&units=${units}&appid=${WEATHER_API_KEY}`);
 
     fetch(request, options).then((response) => {
       response.json().then((data) => {
-        this.setState({weather: data, loaded: true})
+        let city = Object.assign(data, {unit: units});
+        this.setState({ cities: [...this.state.cities, city]});
+        if(this.isLoaded()){
+          this.setState({ loaded: true });
+        }
       })
     }, (response) => {
       console.log(response);
     });
   }
 
+  isLoaded() {
+    return this.state.cities.length === this.props.cities.length;
+  }
+
+  componentDidMount() {
+    let cities = this.props.cities;
+    cities.forEach((city) => {
+      this.getCityData(city);
+    })
+  }
+
   render() {
     // https://openweathermap.org/current#current_JSON
     const isLoaded = this.state.loaded;
 
-    let output = null;
+    let output = [];
     if (isLoaded) {
-      const weather = this.state.weather;
-      const iconUrl = `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
+      output = this.state.cities.map(function(city, index) {
+        const iconUrl = `http://openweathermap.org/img/w/${city.weather[0].icon}.png`;
+        let unitDivider = city.unit === 'imperial' ? 'F' : 'C';
 
-      output =
-        <div>
-          <h1 className="current-temp">{weather.main.temp} {this.props.unit}</h1>
-          <h2 className="city-name">{weather.name}</h2>
-          <div className="current-conditions-container">
-            <img src={iconUrl} alt=""/>
-            <div>{weather.weather[0].description}</div>
-          </div>
-          <div className="forecast-container">
-            <div className="forecast">
-              <h4>Low</h4>
-              <p>{weather.main.temp_min} {this.props.unit}</p>
+        return(
+          <div className="widget-piece-container" key={index}>
+            <div className="top-tab-container">
+              <h2 className="city-name">{city.name}</h2>
+              <div className="conditions-container">
+                <img src={iconUrl} alt=""/>
+                <div>{city.weather[0].description}</div>
+              </div>
             </div>
-            <div className="forecast">
-              <h4>High</h4>
-              <p>{weather.main.temp_max} {this.props.unit}</p>
+            <h3 className="current-temp">{Math.round(city.main.temp)} {unitDivider}</h3>
+            <div className="forecast-container">
+              <div className="forecast">
+                <p>{Math.round(city.main.temp_min)} {unitDivider}</p>
+              </div>
+              <div className="forecast">
+                <p>{Math.round(city.main.temp_max)} {unitDivider}</p>
+              </div>
             </div>
           </div>
-        </div>
+        );
+      })
     } else {
       output = <p>Loading...</p>;
     }
 
-    return (<div>
+    return (<div className="widget-section-container">
       {output}
     </div>);
   }
 }
 
-export default Weather;
+export default WeatherList;
