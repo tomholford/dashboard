@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ClockList from './components/ClockList/ClockList';
 import WeatherList from './components/Weather/Weather';
 import './App.sass';
 
@@ -28,7 +29,9 @@ class App extends Component {
     return (
       <div className="app-container">
         <h1>Weather</h1>
-        <WeatherList cities={cities} unit={cities.unit}/>
+        <WeatherList cities={cities}/>
+        <h1>Local Time</h1>
+        <ClockList cities={cities}/>
       </div>
     );
   }
