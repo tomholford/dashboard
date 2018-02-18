@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html --public-url ./"
+    "build": "parcel build index.html --public-url ./",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "autoprefixer": "^7.2.5",
