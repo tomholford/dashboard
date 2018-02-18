@@ -10,7 +10,7 @@ class ClockList extends React.Component {
   componentDidMount() {
     this.timerID = setInterval(
       () => this.tick(),
-      1000
+      60000
     );
   }
 
@@ -27,7 +27,7 @@ class ClockList extends React.Component {
   render() {
     return (
       <div className="clock-container">
-        <h4>{this.state.date.toLocaleTimeString(this.props.locale, { timeZone: this.props.timezone })}</h4>
+        <h4>{this.state.date.toLocaleTimeString(this.props.city.locale, { timeZone: this.props.city.timezone })}</h4>
       </div>
     );
   }
