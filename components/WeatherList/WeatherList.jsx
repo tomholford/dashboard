@@ -1,5 +1,7 @@
 import React from 'react';
-import './Weather.sass'
+import WeatherCurrent from '../WeatherCurrent/WeatherCurrent';
+import WeatherForecast from '../WeatherForecast/WeatherForecast';
+import './WeatherList.sass'
 
 const WEATHER_API_KEY = '16793c2cd11658bc4be9dc7d5fa5c848';
 
@@ -13,7 +15,7 @@ class WeatherList extends React.Component {
     };
   }
 
-  getCityData(city) {
+  getCurrentCityWeatherData(city) {
     let units = city.unit === 'F' ? 'imperial' : 'metric';
     let options = {
       method: 'GET',
@@ -30,6 +32,7 @@ class WeatherList extends React.Component {
         }
       })
     }, (response) => {
+      console.log('error: ')
       console.log(response);
     });
   }
@@ -41,38 +44,23 @@ class WeatherList extends React.Component {
   componentDidMount() {
     let cities = this.props.cities;
     cities.forEach((city) => {
-      this.getCityData(city);
+      this.getCurrentCityWeatherData(city);
     })
   }
 
   render() {
-    // https://openweathermap.org/current#current_JSON
     const isLoaded = this.state.loaded;
 
     let output = [];
     if (isLoaded) {
       output = this.state.cities.map(function(city, index) {
-        const iconUrl = `http://openweathermap.org/img/w/${city.weather[0].icon}.png`;
+        const iconUrl = `http://openweathermap.org/img/w/${city['weather'][0].icon}.png`;
         let unitDivider = city.unit === 'imperial' ? 'F' : 'C';
 
         return(
           <div className="widget-piece-container" key={index}>
-            <div className="top-tab-container">
-              <h2 className="city-name">{city.name}</h2>
-              <div className="conditions-container">
-                <img src={iconUrl} alt=""/>
-                <div>{city.weather[0].description}</div>
-              </div>
-            </div>
-            <h3 className="current-temp">{Math.round(city.main.temp)} {unitDivider}</h3>
-            <div className="forecast-container">
-              <div className="forecast">
-                <p>{Math.round(city.main.temp_min)} {unitDivider}</p>
-              </div>
-              <div className="forecast">
-                <p>{Math.round(city.main.temp_max)} {unitDivider}</p>
-              </div>
-            </div>
+            <WeatherCurrent current={city} />
+            <WeatherForecast cityId={city.id} unit={city.unit} />
           </div>
         );
       })

@@ -24,10 +24,16 @@ class ClockList extends React.Component {
     });
   }
 
+  formattedDate() {
+    return this.state.date.toLocaleTimeString(
+      this.props.city.locale,
+      { timeZone: this.props.city.timezone });
+  }
+
   render() {
     return (
       <div className="clock-container">
-        <h4>{this.state.date.toLocaleTimeString(this.props.city.locale, { timeZone: this.props.city.timezone })}</h4>
+        <h4>{this.formattedDate()}</h4>
       </div>
     );
   }

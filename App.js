@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ClockList from './components/ClockList/ClockList';
-import WeatherList from './components/Weather/Weather';
+import WeatherList from './components/WeatherList/WeatherList';
 import './App.sass';
 
 const cities = [
