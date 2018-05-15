@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ClockList from './components/ClockList/ClockList';
-import WeatherList from './components/Weather/Weather';
+import WeatherList from './components/WeatherList/WeatherList';
 import './App.sass';
 
 const cities = [
@@ -17,6 +17,13 @@ const cities = [
     "locale": "en-US",
     "timezone": "America/Los_Angeles",
     "name": "San Francisco",
+  },
+  {
+    "id": 3117732,
+    "unit": "C",
+    "locale": "es-SP",
+    "timezone": "Europe/Madrid",
+    "name": "Madrid",
   }
 ];
 

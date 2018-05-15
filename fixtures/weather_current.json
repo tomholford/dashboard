@@ -1,0 +1,40 @@
+{
+  "coord": {
+    "lon": 139.69,
+    "lat": 35.69
+  },
+  "weather": [{
+    "id": 701,
+    "main": "Mist",
+    "description": "mist",
+    "icon": "50n"
+  }],
+  "base": "stations",
+  "main": {
+    "temp": 15.52,
+    "pressure": 1018,
+    "humidity": 93,
+    "temp_min": 15,
+    "temp_max": 16
+  },
+  "visibility": 6000,
+  "wind": {
+    "speed": 7.7,
+    "deg": 70
+  },
+  "clouds": {
+    "all": 75
+  },
+  "dt": 1524423600,
+  "sys": {
+    "type": 1,
+    "id": 7619,
+    "message": 0.0026,
+    "country": "JP",
+    "sunrise": 1524340761,
+    "sunset": 1524388833
+  },
+  "id": 1850144,
+  "name": "Tōkyō-to",
+  "cod": 200
+}
