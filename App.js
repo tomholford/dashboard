@@ -17,6 +17,13 @@ const cities = [
     "locale": "en-US",
     "timezone": "America/Los_Angeles",
     "name": "San Francisco",
+  },
+  {
+    "id": 3117732,
+    "unit": "C",
+    "locale": "es-SP",
+    "timezone": "Europe/Madrid",
+    "name": "Madrid",
   }
 ];
 

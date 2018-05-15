@@ -1,6 +1,8 @@
 import React from 'react';
+import Units from '../../utils/Units';
 import WeatherCurrent from '../WeatherCurrent/WeatherCurrent';
 import WeatherForecast from '../WeatherForecast/WeatherForecast';
+import WeatherService from '../../services/WeatherService';
 import './WeatherList.sass'
 
 const WEATHER_API_KEY = '16793c2cd11658bc4be9dc7d5fa5c848';
@@ -15,26 +17,15 @@ class WeatherList extends React.Component {
     };
   }
 
-  getCurrentCityWeatherData(city) {
-    let units = city.unit === 'F' ? 'imperial' : 'metric';
-    let options = {
-      method: 'GET',
-      cache: 'no-cache'
-    };
-    let request = new Request(`https://api.openweathermap.org/data/2.5/weather?id=${city.id}&units=${units}&appid=${WEATHER_API_KEY}`);
-
-    fetch(request, options).then((response) => {
-      response.json().then((data) => {
-        let city = Object.assign(data, {unit: units});
-        this.setState({ cities: [...this.state.cities, city]});
-        if(this.isLoaded()){
-          this.setState({ loaded: true });
-        }
-      })
-    }, (response) => {
-      console.log('error: ')
-      console.log(response);
-    });
+  getCurrent = (city) => {
+    let units = Units.toSystem(city.unit);
+    WeatherService.getCurrent(city.id, units).then((data) => {
+      let city = Object.assign(data, {unit: units});
+      this.setState({ cities: [...this.state.cities, city]});
+      if(this.isLoaded()){
+        this.setState({ loaded: true });
+      }
+    })
   }
 
   isLoaded() {
@@ -44,7 +35,7 @@ class WeatherList extends React.Component {
   componentDidMount() {
     let cities = this.props.cities;
     cities.forEach((city) => {
-      this.getCurrentCityWeatherData(city);
+      this.getCurrent(city);
     })
   }
 
