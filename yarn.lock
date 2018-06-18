@@ -988,6 +988,14 @@ form-data@~2.3.1:
     combined-stream "1.0.6"
     mime-types "^2.1.12"
 
+frappe-charts@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/frappe-charts/-/frappe-charts-0.0.6.tgz#c87967a0bd85f33cde255b3f5cd386796ba662d2"
+
+frappe-charts@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/frappe-charts/-/frappe-charts-1.1.0.tgz#c13929a1b79f4c4e72c943a0deca300b2eb78f77"
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -1650,9 +1658,36 @@ qs@~6.5.1:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
 
+react-comps-svg-charts@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-comps-svg-charts/-/react-comps-svg-charts-1.0.5.tgz#5f5d101109fdbf0bd36b85a376353c79f810b9ee"
+  dependencies:
+    frappe-charts "0.0.6"
+    prop-types "^15.6.0"
+    react "^16.0.0"
+    react-dom "^16.0.0"
+
+react-dom@^16.0.0:
+  version "16.4.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.4.1.tgz#7f8b0223b3a5fbe205116c56deb85de32685dad6"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
 react-dom@^16.2.0:
   version "16.3.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.3.2.tgz#cb90f107e09536d683d84ed5d4888e9640e0e4df"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react@^16.0.0:
+  version "16.4.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.4.1.tgz#de51ba5764b5dbcd1f9079037b862bd26b82fe32"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
