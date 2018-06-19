@@ -4,7 +4,7 @@ import '../../node_modules/react-comps-svg-charts/dist/svg-charts-styles.css'
 
 import { LineChart } from 'react-comps-svg-charts';
 
-const RANGE_OPTIONS = [8, 16, 32];
+const RANGE_OPTIONS = [8, 16, 24];
 const FORECAST_RANGE = 16;
 const CHART_HEIGHT = 150;
 const COLORS = ['#7cd6fd', '#743ee2'];
@@ -63,7 +63,6 @@ class WeatherForecastChart extends React.Component {
     return (
       <div className="chart-container">
         <LineChart
-          title="forecast"
           data={{
             labels: this.state.labels,
             datasets: this.state.datasets
