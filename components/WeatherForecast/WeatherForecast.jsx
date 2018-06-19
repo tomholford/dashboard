@@ -1,6 +1,8 @@
 import React from 'react';
 import WeatherService from '../../services/WeatherService';
-import './WeatherForecast.sass'
+import './WeatherForecast.sass';
+
+import WeatherForecastChart from '../WeatherForecastChart/WeatherForecastChart';
 
 class WeatherForecast extends React.Component {
   constructor(props) {
@@ -16,6 +18,7 @@ class WeatherForecast extends React.Component {
   getForecastData = () => {
     WeatherService.getForecast(this.state.cityId, this.state.unit)
       .then(data => {
+        console.log(data);
         this.setState({
           forecast: data
         });
@@ -63,6 +66,7 @@ class WeatherForecast extends React.Component {
             <p>{forecastHigh} {unitDivider}</p>
           </div>
         </div>
+        <WeatherForecastChart forecast={forecast} />
       </div>
     );
   }
