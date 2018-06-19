@@ -67,19 +67,6 @@ class WeatherForecast extends React.Component {
           </div>
         </div>
         <WeatherForecastChart forecast={forecast} />
-        {/* <table>
-          <tbody>
-            {forecast.list.map((f) => {
-              let forecastLow = Math.round(f.main.temp_min);
-              let forecastHigh = Math.round(f.main.temp_max);
-              return <tr key={f.dt}>
-                <td>{new Date(f.dt * 1000).toISOString()}</td>
-                <td>{forecastLow} {unitDivider}</td>
-                <td>{forecastHigh} {unitDivider}</td>
-              </tr>
-            })}
-          </tbody>
-        </table> */}
       </div>
     );
   }
