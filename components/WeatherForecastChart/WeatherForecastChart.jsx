@@ -29,14 +29,15 @@ const mapValueFromDataset = (dataset, key) => {
   }
 
 const labelDataset = (dataset, range) => {
-  return truncate(dataset.map((forecast) => {
-    let forecaseDate = new Date(forecast['dt'] * 1000);
-    let forecastHour = forecaseDate.getUTCHours();
+  return truncate(dataset.map((forecast, index) => {
+    let forecastDate = new Date(forecast['dt'] * 1000);
+    let forecastHour = forecastDate.getHours();
 
-    // return new Date(forecast['dt'] * 1000).getUTCHours().toString();
-    if (forecastHour !== 12) { return '' };
-
-    return forecaseDate.getUTCDate().toString();
+    if ((index % 3) < 1) {
+      return forecastHour.toString()
+    } else {
+      return '';
+    };
   }), range);
 }
 
