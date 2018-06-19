@@ -4,30 +4,32 @@ import '../../node_modules/react-comps-svg-charts/dist/svg-charts-styles.css'
 
 import { LineChart } from 'react-comps-svg-charts';
 
+const RANGE_OPTIONS = [8, 16, 32];
 const FORECAST_RANGE = 16;
 const CHART_HEIGHT = 150;
+const COLORS = ['#7cd6fd', '#743ee2'];
 
-const buildDatasets = (forecastList) => {
+const buildDatasets = (forecastList, range) => {
     return [
       {
-        name: 'H',
-        values: mapDataset(forecastList, 'temp_max')
+        name: 'High',
+        values: truncate(mapValueFromDataset(forecastList, 'temp_max'), range)
       },
       {
-        name: 'L',
-        values: mapDataset(forecastList, 'temp_min')
+        name: 'Low',
+        values: truncate(mapValueFromDataset(forecastList, 'temp_min'), range)
       }
     ];
   }
 
-const mapDataset = (dataset, key) => {
+const mapValueFromDataset = (dataset, key) => {
     return dataset.map((forecast) => {
       return forecast['main'][key];
-    }).slice(0,FORECAST_RANGE)
+    })
   }
 
-const labelDataset = (dataset) => {
-  return dataset.map((forecast) => {
+const labelDataset = (dataset, range) => {
+  return truncate(dataset.map((forecast) => {
     let forecaseDate = new Date(forecast['dt'] * 1000);
     let forecastHour = forecaseDate.getUTCHours();
 
@@ -35,21 +37,26 @@ const labelDataset = (dataset) => {
     if (forecastHour !== 12) { return '' };
 
     return forecaseDate.getUTCDate().toString();
-  }).slice(0,FORECAST_RANGE)
+  }), range);
 }
+
+const truncate = (list, length) => { return list.slice(0, length) };
 
 class WeatherForecastChart extends React.Component {
   constructor(props) {
     super(props);
 
-    // console.log(this.props);
-
     this.state = {
-      datasets: buildDatasets(this.props.forecast.list),
-      labels: labelDataset(this.props.forecast.list)
+      datasets: buildDatasets(this.props.forecast.list, FORECAST_RANGE),
+      labels: labelDataset(this.props.forecast.list, FORECAST_RANGE)
     };
+  }
 
-    console.log(this.state);
+  updateDatasets = (range) => {
+    this.setState({
+      datasets: buildDatasets(this.props.forecast.list, range),
+      labels: labelDataset(this.props.forecast.list, range),
+    });
   }
 
   render() {
@@ -64,8 +71,15 @@ class WeatherForecastChart extends React.Component {
           show_dots={false}
           heatline
           height={CHART_HEIGHT}
-          colors={['#7cd6fd', '#743ee2']}
+          colors={COLORS}
         />
+        <span>days: </span>
+        <hr/>
+        <div className="chart-button-container">
+          {RANGE_OPTIONS.map((r) => {
+            return <button key={r} onClick={() => this.updateDatasets(r)}>{r / 8}</button>
+          })}
+        </div>
       </div>
     )
   }
