@@ -1,4 +1,5 @@
 import React from 'react';
+import Units from '../../utils/Units';
 import WeatherService from '../../services/WeatherService';
 import './WeatherForecast.sass';
 
@@ -9,26 +10,20 @@ class WeatherForecast extends React.Component {
     super(props);
 
     this.state = {
-      cityId: this.props.cityId,
-      unit: this.props.unit,
-      forecast: {}
+      forecast: null
     };
   }
 
   getForecastData = () => {
-    WeatherService.getForecast(this.state.cityId, this.state.unit)
+    const location = this.props.location;
+    const units = Units.toSystem(location.unit);
+
+    WeatherService.getForecast(location.id, units)
       .then(data => {
-        console.log(data);
         this.setState({
           forecast: data
         });
     })
-  }
-
-  isLoaded = () => {
-    // yeah this is a hack :)
-    // JSON.stringify(this.state.forecast) === JSON.stringify({})
-    return this.state.forecast.hasOwnProperty('city');
   }
 
   componentDidMount() {
@@ -36,7 +31,9 @@ class WeatherForecast extends React.Component {
   }
 
   render() {
-    if(!this.isLoaded()) {
+    const forecast = this.state.forecast;
+
+    if(!forecast) {
       return (
         <div>
           <div className="forecast-container">
@@ -49,26 +46,26 @@ class WeatherForecast extends React.Component {
           </div>
         </div>
       );
-    }
+    } else {
+      const location = this.props.location;
+      const unitDivider = location.unit;
+      const forecastLow = Math.round(forecast.list[0].main.temp_min);
+      const forecastHigh = Math.round(forecast.list[0].main.temp_max);
 
-    const forecast = this.state.forecast;
-    let unitDivider = this.state.unit === 'imperial' ? 'F' : 'C';
-    let forecastLow = Math.round(forecast.list[0].main.temp_min);
-    let forecastHigh = Math.round(forecast.list[0].main.temp_max);
-
-    return (
-      <div>
-        <div className="forecast-container">
-          <div className="forecast">
-            <p>{forecastLow} {unitDivider}</p>
+      return (
+        <div>
+          <div className="forecast-container">
+            <div className="forecast">
+              <p>{forecastLow} {unitDivider}</p>
+            </div>
+            <div className="forecast">
+              <p>{forecastHigh} {unitDivider}</p>
+            </div>
           </div>
-          <div className="forecast">
-            <p>{forecastHigh} {unitDivider}</p>
-          </div>
+          <WeatherForecastChart forecast={forecast} />
         </div>
-        <WeatherForecastChart forecast={forecast} />
-      </div>
-    );
+      );
+    }
   }
 }
 

@@ -5,8 +5,3 @@ import './index.sass';
 const root = document.getElementById('root');
 
 ReactDOM.render(<App />, root);
-
-// Hot Module Replacement
-if (module.hot) {
-  module.hot.accept();
-}

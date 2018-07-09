@@ -1,20 +1,23 @@
 import React from 'react';
+import { inject, observer } from 'mobx-react';
 import Clock from '../Clock/Clock';
 import './ClockList.sass';
 
+@inject('store')
+@observer
 class ClockList extends React.Component {
   render() {
-    let output = [];
-
-    output = this.props.cities.map((city, index) => {
-      return (
-        <Clock key={index} city={city}/>
-      );
-    })
+    const locations = this.props.store.locations;
 
     return (
       <div className="clocklist-container">
-        {output}
+        {
+          locations.map((location, _index) => {
+            return (
+              <Clock key={location.id} location={location}/>
+            );
+          })
+        }
       </div>
     );
   }

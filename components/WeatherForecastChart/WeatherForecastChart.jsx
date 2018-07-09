@@ -72,6 +72,7 @@ class WeatherForecastChart extends React.Component {
           heatline
           height={CHART_HEIGHT}
           colors={COLORS}
+          title=''
         />
         <span>days: </span>
         <hr/>

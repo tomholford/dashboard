@@ -26,8 +26,8 @@ class ClockList extends React.Component {
 
   formattedDate() {
     return this.state.date.toLocaleTimeString(
-      this.props.city.locale,
-      { timeZone: this.props.city.timezone });
+      this.props.location.locale,
+      { timeZone: this.props.location.timezone });
   }
 
   render() {
