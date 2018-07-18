@@ -1,5 +1,4 @@
 import React from 'react';
-import WeatherService from '../../services/WeatherService';
 import Units from '../../utils/Units';
 
 import './WeatherCurrent.sass'
@@ -7,34 +6,17 @@ import './WeatherCurrent.sass'
 class WeatherCurrent extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      current: null
-    }
-  }
-
-  componentDidMount() {
-    this.getCurrentData();
   }
 
   iconUrl() {
-    const current = this.state.current;
+    const current = this.props.location.current;
 
     return `http://openweathermap.org/img/w/${current.weather[0].icon}.png`;
   }
 
-  getCurrentData = () => {
-    const location = this.props.location;
-    let units = Units.toSystem(location.unit);
-
-    WeatherService.getCurrent(location.id, units).then((data) => {
-      this.setState({ current: data });
-    })
-  }
-
   render() {
     const location = this.props.location;
-    const current = this.state.current;
+    const current = location.current;
 
     if(!current) {
       return (<div>Loading...</div>);

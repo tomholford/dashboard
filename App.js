@@ -4,6 +4,7 @@ import { hot } from 'react-hot-loader';
 import ClockList from './components/ClockList/ClockList';
 import WeatherList from './components/WeatherList/WeatherList';
 import LocationStore from './stores/LocationStore';
+import WeatherService from './services/WeatherService';
 import './App.sass';
 
 
@@ -11,7 +12,7 @@ import './App.sass';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.store = LocationStore.initialize();
+    this.store = LocationStore.initialize(WeatherService);
   }
 
   render() {

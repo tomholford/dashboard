@@ -1,6 +1,6 @@
 import { autorun, set, toJS } from 'mobx';
 
-export default function(_this, instance, storeId, defaultStore = null) {
+export default function(instance, storeId, defaultStore = null) {
   let firstRun = true;
 
   autorun(() => {

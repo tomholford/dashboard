@@ -1,6 +1,5 @@
 import React from 'react';
 import Units from '../../utils/Units';
-import WeatherService from '../../services/WeatherService';
 import './WeatherForecast.sass';
 
 import WeatherForecastChart from '../WeatherForecastChart/WeatherForecastChart';
@@ -8,30 +7,12 @@ import WeatherForecastChart from '../WeatherForecastChart/WeatherForecastChart';
 class WeatherForecast extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      forecast: null
-    };
   }
 
-  getForecastData = () => {
-    const location = this.props.location;
-    const units = Units.toSystem(location.unit);
-
-    WeatherService.getForecast(location.id, units)
-      .then(data => {
-        this.setState({
-          forecast: data
-        });
-    })
-  }
-
-  componentDidMount() {
-    this.getForecastData();
-  }
 
   render() {
-    const forecast = this.state.forecast;
+    const location = this.props.location;
+    const forecast = location.forecast;
 
     if(!forecast) {
       return (
@@ -47,7 +28,6 @@ class WeatherForecast extends React.Component {
         </div>
       );
     } else {
-      const location = this.props.location;
       const unitDivider = location.unit;
       const forecastLow = Math.round(forecast.list[0].main.temp_min);
       const forecastHigh = Math.round(forecast.list[0].main.temp_max);
