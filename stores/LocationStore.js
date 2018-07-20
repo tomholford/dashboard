@@ -70,6 +70,9 @@ class LocationStore {
     const index = this.locations.indexOf(location);
     let found = this.locations[index];
 
+    if(!('dt' in data)) {
+      data['dt'] = (new Date).getTime();
+    }
 
     found[key] = data;
   }
@@ -79,7 +82,9 @@ class LocationStore {
     this.locations.forEach((location) => {
       if(this.locationCache(location, 'current')) {
         // do nothing
+        console.log(`current cached: ${location.name}`);
       } else {
+        console.log(`current api call: ${location.name}`);
         this.weatherApi.getCurrent(location).then((data) => {
           this.addResponse(location, 'current', data);
         })
@@ -87,7 +92,9 @@ class LocationStore {
 
       if(this.locationCache(location, 'forecast')) {
         // do nothing
+        console.log(`forecast cached: ${location.name}`);
       } else {
+        console.log(`forecast api call: ${location.name}`);
         this.weatherApi.getForecast(location).then((data) => {
           this.addResponse(location, 'forecast', data);
         })
@@ -108,10 +115,16 @@ class LocationStore {
     if('dt' in location[key]) {
       lastUpdated = new Date(location[key]['dt'] * 1000);
     } else {
-      lastUpdated = new Date(location[key]['list'][0]['dt'] * 1000);
+      return true;
     }
+    const currentDate = new Date;
+    const delta = Math.abs(currentDate - lastUpdated);
+    console.log(`current date: ${currentDate.toLocaleString()}`);
     console.log(`${key} last updated: ${lastUpdated.toLocaleString()}`);
-    return ((new Date) - lastUpdated) > delay;
+    console.log(`delta: ${delta} ms`);
+    console.log(`delay: ${delay} ms`);
+    console.log(`shouldUpdate: ${delta > delay}`);
+    return delta > delay;
   }
 }
 
