@@ -3,6 +3,7 @@ import { observer, Provider } from 'mobx-react';
 import { hot } from 'react-hot-loader';
 import ClockList from './components/ClockList/ClockList';
 import WeatherList from './components/WeatherList/WeatherList';
+import NewWeatherCurrent from './components/NewWeatherCurrent/NewWeatherCurrent';
 import LocationStore from './stores/LocationStore';
 import WeatherService from './services/WeatherService';
 import './App.sass';
@@ -25,6 +26,7 @@ class App extends Component {
           <WeatherList />
           <h1>Local Time</h1>
           <ClockList />
+          <NewWeatherCurrent />
         </div>
       </Provider>
     );
