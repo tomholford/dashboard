@@ -14,6 +14,12 @@ class WeatherCurrent extends React.Component {
     return `http://openweathermap.org/img/w/${current.weather[0].icon}.png`;
   }
 
+  capitalizeWords(str) {
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
   render() {
     const location = this.props.location;
     const current = location.current;
@@ -32,7 +38,7 @@ class WeatherCurrent extends React.Component {
             <h2 className="city-name">{cityName}</h2>
             <div className="conditions-container">
               <img src={this.iconUrl()} alt=""/>
-              <div>{description}</div>
+              <div>{this.capitalizeWords(description)}</div>
             </div>
           </div>
           <h3 className="current-temp">{currentTemperature} {unitDivider}</h3>
