@@ -3,6 +3,16 @@
   padding: 8px
   background-color: #fefefe
   border: dotted 1px purple
+  display: flex
+  flex-flow: column nowrap
+
+  &:hover .weather-view-button
+    opacity: 1
+
+.weather-view-button-container
+  display: flex
+  flex-flow: row nowrap
+  justify-content: space-between
 
 .weather-view-button
   border: none
@@ -10,6 +20,9 @@
   outline: none
   cursor: pointer
   padding: 10px 15px
+  opacity: 0.3
+  transition: opacity 0.175s
+  align-self: flex-end
 
   &:hover
     background: rgba(0,0,0,0.1)
