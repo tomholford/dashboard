@@ -1,5 +1,17 @@
-.widget-piece-container
-  width: 30%
+.weather-view-container
   margin: 8px
   padding: 8px
   background-color: #fefefe
+  display: flex
+  flex-flow: column nowrap
+
+  &:hover .widget-button
+    opacity: 1
+
+.weather-view-button-container
+  display: flex
+  flex-flow: row nowrap
+  justify-content: space-between
+
+  button
+    align-self: flex-end

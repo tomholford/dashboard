@@ -9,11 +9,12 @@
     "babel-core": "^6.26.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "node-sass": "^4.7.2"
   },
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html --public-url ./",
+    "start": "NODE_ENV='development' parcel index.html",
+    "build": "NODE_ENV='production' parcel build index.html --public-url ./ --detailed-report",
     "deploy": "firebase deploy"
   },
   "dependencies": {

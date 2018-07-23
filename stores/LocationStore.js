@@ -1,8 +1,10 @@
 import { action, observable, reaction } from 'mobx';
 import { computed } from 'mobx-react';
+import * as Environment from '../utils/Environment';
 import AutoStore from '../utils/AutoStore';
+import Location from '../models/Location';
 
-const CACHE_THRESHOLD = 30 * 60 * 1000; /* 30 minutes, in ms */
+const TTL = 60 * 60 * 1000; /* 60 minutes, in ms */
 const DEFAULT_STORE = {
   "locations": [
     {
@@ -46,13 +48,8 @@ class LocationStore {
 
   @action
 	addLocation = (location) => {
-		this.locations.push({
-      "id": location.id,
-      "unit": location.unit,
-      "locale": location.locale,
-      "timezone": location.timezone,
-      "name": location.name,
-    });
+    const newLocation = new Location(location);
+		this.locations.push(newLocation);
 	}
 
   @action
@@ -70,8 +67,9 @@ class LocationStore {
     const index = this.locations.indexOf(location);
     let found = this.locations[index];
 
+    // since forecast response doesn't have timestamp, add it ourselves :)
     if(!('dt' in data)) {
-      data['dt'] = (new Date).getTime();
+      data['dt'] = Math.round((new Date).getTime() / 1000);
     }
 
     found[key] = data;
@@ -80,21 +78,29 @@ class LocationStore {
   @action
   loadData = () => {
     this.locations.forEach((location) => {
-      if(this.locationCache(location, 'current')) {
+      if(this.shouldUseCached(location, 'current')) {
         // do nothing
-        console.log(`current cached: ${location.name}`);
+        if(Environment.DEVELOPMENT) {
+          console.log(`current cached: ${location.name}`);
+        }
       } else {
-        console.log(`current api call: ${location.name}`);
+        if(Environment.DEVELOPMENT) {
+          console.log(`current api call: ${location.name}`);
+        }
         this.weatherApi.getCurrent(location).then((data) => {
           this.addResponse(location, 'current', data);
         })
       }
 
-      if(this.locationCache(location, 'forecast')) {
+      if(this.shouldUseCached(location, 'forecast')) {
         // do nothing
-        console.log(`forecast cached: ${location.name}`);
+        if(Environment.DEVELOPMENT) {
+          console.log(`forecast cached: ${location.name}`);
+        }
       } else {
-        console.log(`forecast api call: ${location.name}`);
+        if(Environment.DEVELOPMENT) {
+          console.log(`forecast api call: ${location.name}`);
+        }
         this.weatherApi.getForecast(location).then((data) => {
           this.addResponse(location, 'forecast', data);
         })
@@ -102,15 +108,22 @@ class LocationStore {
     })
   }
 
-  locationCache = (location, key) => {
+  @action
+  toggleForecastChart = (location) => {
+    const index = this.locations.indexOf(location);
+    let found = this.locations[index];
+    found.showForecastChart = !found.showForecastChart;
+  }
+
+  shouldUseCached = (location, key) => {
     if(key in location && location[key]){
-      return this.locationShouldUpdate(location, key);
+      return !this.isLocationDataStale(location, key);
     }else{
       return false;
     }
   }
 
-  locationShouldUpdate = (location, key, delay = CACHE_THRESHOLD) => {
+  isLocationDataStale = (location, key, ttl = TTL) => {
     let lastUpdated;
     if('dt' in location[key]) {
       lastUpdated = new Date(location[key]['dt'] * 1000);
@@ -119,12 +132,14 @@ class LocationStore {
     }
     const currentDate = new Date;
     const delta = Math.abs(currentDate - lastUpdated);
-    console.log(`current date: ${currentDate.toLocaleString()}`);
-    console.log(`${key} last updated: ${lastUpdated.toLocaleString()}`);
-    console.log(`delta: ${delta} ms`);
-    console.log(`delay: ${delay} ms`);
-    console.log(`shouldUpdate: ${delta > delay}`);
-    return delta > delay;
+    if(Environment.DEVELOPMENT) {
+      console.log(`current date: ${currentDate.toLocaleString()}`);
+      console.log(`${key} last updated: ${lastUpdated.toLocaleString()}`);
+      console.log(`delta: ${delta} ms`);
+      console.log(`ttl: ${ttl} ms`);
+      console.log(`shouldUpdate: ${delta > ttl}`);
+    }
+    return delta > ttl;
   }
 }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { observer } from 'mobx-react';
 import './WeatherForecastChart.sass'
 import '../../node_modules/react-comps-svg-charts/dist/svg-charts-styles.css'
 
@@ -43,46 +44,65 @@ const labelDataset = (dataset, range) => {
 
 const truncate = (list, length) => { return list.slice(0, length) };
 
+@observer
 class WeatherForecastChart extends React.Component {
   constructor(props) {
     super(props);
 
+    const forecast = this.props.location.forecast;
+
     this.state = {
-      datasets: buildDatasets(this.props.forecast.list, FORECAST_RANGE),
-      labels: labelDataset(this.props.forecast.list, FORECAST_RANGE)
+      datasets: buildDatasets(forecast.list, FORECAST_RANGE),
+      labels: labelDataset(forecast.list, FORECAST_RANGE),
+      selectedRange: FORECAST_RANGE
     };
   }
 
   updateDatasets = (range) => {
+    const forecast = this.props.location.forecast;
+
     this.setState({
-      datasets: buildDatasets(this.props.forecast.list, range),
-      labels: labelDataset(this.props.forecast.list, range),
+      datasets: buildDatasets(forecast.list, range),
+      labels: labelDataset(forecast.list, range),
+      selectedRange: range
     });
   }
 
+  selectedCss = (currentRange) => {
+    return this.state.selectedRange === currentRange ? 'selected' : '';
+  }
+
+
   render() {
-    return (
-      <div className="chart-container">
-        <LineChart
-          data={{
-            labels: this.state.labels,
-            datasets: this.state.datasets
-          }}
-          show_dots={false}
-          heatline
-          height={CHART_HEIGHT}
-          colors={COLORS}
-          title=''
-        />
-        <span>days: </span>
-        <hr/>
-        <div className="chart-button-container">
-          {RANGE_OPTIONS.map((r) => {
-            return <button key={r} onClick={() => this.updateDatasets(r)}>{r / 8}</button>
-          })}
+    const location = this.props.location;
+
+    if(location.showForecastChart) {
+      return (
+        <div className="weather-forecast-chart-container">
+          <LineChart
+            data={{
+              labels: this.state.labels,
+              datasets: this.state.datasets
+            }}
+            show_dots={false}
+            heatline
+            height={CHART_HEIGHT}
+            colors={COLORS}
+            title=''
+          />
+          <div className="chart-button-container">
+            {RANGE_OPTIONS.map((r) => {
+              return <button className={["widget-button", this.selectedCss(r)].join(' ')}
+                             key={r}
+                             onClick={() => this.updateDatasets(r)}>{r / 8}
+                     </button>
+            })}
+          </div>
         </div>
-      </div>
-    )
+      );
+    } else {
+      return ('');
+    }
   }
 }
 

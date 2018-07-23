@@ -2,13 +2,10 @@ import React from 'react';
 import Units from '../../utils/Units';
 import './WeatherForecast.sass';
 
-import WeatherForecastChart from '../WeatherForecastChart/WeatherForecastChart';
-
 class WeatherForecast extends React.Component {
   constructor(props) {
     super(props);
   }
-
 
   render() {
     const location = this.props.location;
@@ -42,7 +39,6 @@ class WeatherForecast extends React.Component {
               <p>{forecastHigh} {unitDivider}</p>
             </div>
           </div>
-          <WeatherForecastChart forecast={forecast} />
         </div>
       );
     }

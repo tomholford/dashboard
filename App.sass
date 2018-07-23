@@ -7,3 +7,30 @@ body
 
   h1
     font-size: 1.4em
+
+  // enabled in dev mode by default
+  &.debug
+    .clock-container
+      border: dotted 1px orange
+
+    .locations-container
+      border: dotted 2px blue
+
+    .location-container
+      border: dotted 2px green
+
+    .weather-view-container
+      border: dotted 1px purple
+
+.widget-button
+  border: none
+  background: transparent
+  outline: none
+  cursor: pointer
+  padding: 10px 15px
+  opacity: 0.3
+  transition: opacity 0.175s
+  align-self: flex-end
+
+  &:hover
+    background: rgba(0,0,0,0.05)
