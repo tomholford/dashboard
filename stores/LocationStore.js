@@ -1,6 +1,7 @@
 import { action, observable, reaction } from 'mobx';
 import { computed } from 'mobx-react';
 import AutoStore from '../utils/AutoStore';
+import Location from '../models/Location';
 
 const CACHE_THRESHOLD = 30 * 60 * 1000; /* 30 minutes, in ms */
 const DEFAULT_STORE = {
@@ -46,13 +47,8 @@ class LocationStore {
 
   @action
 	addLocation = (location) => {
-		this.locations.push({
-      "id": location.id,
-      "unit": location.unit,
-      "locale": location.locale,
-      "timezone": location.timezone,
-      "name": location.name,
-    });
+    const newLocation = new Location(location);
+		this.locations.push(newLocation);
 	}
 
   @action
@@ -70,6 +66,7 @@ class LocationStore {
     const index = this.locations.indexOf(location);
     let found = this.locations[index];
 
+    // since forecast response doesn't have timestamp, add it ourselves :)
     if(!('dt' in data)) {
       data['dt'] = (new Date).getTime();
     }
@@ -100,6 +97,15 @@ class LocationStore {
         })
       }
     })
+  }
+
+  @action
+  toggleForecastChart = (location) => {
+    const index = this.locations.indexOf(location);
+    let found = this.locations[index];
+    console.log(`storetoggle: ${found.name}`)
+    found.showForecastChart = !found.showForecastChart;
+    console.log(`storevalue: ${found.showForecastChart}`)
   }
 
   locationCache = (location, key) => {

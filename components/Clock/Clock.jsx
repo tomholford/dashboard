@@ -1,7 +1,7 @@
 import React from 'react';
 import './Clock.sass';
 
-class ClockList extends React.Component {
+class Clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {date: new Date()};
@@ -39,4 +39,4 @@ class ClockList extends React.Component {
   }
 }
 
-export default ClockList;
+export default Clock;

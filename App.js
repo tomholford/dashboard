@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { observer, Provider } from 'mobx-react';
 import { hot } from 'react-hot-loader';
-import ClockList from './components/ClockList/ClockList';
-import WeatherList from './components/WeatherList/WeatherList';
+import Locations from './components/Locations/Locations';
 import LocationStore from './stores/LocationStore';
 import WeatherService from './services/WeatherService';
 import './App.sass';
@@ -21,10 +20,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="app-container">
-          <h1>Weather</h1>
-          <WeatherList />
-          <h1>Local Time</h1>
-          <ClockList />
+          <Locations />
         </div>
       </Provider>
     );
