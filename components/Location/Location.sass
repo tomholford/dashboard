@@ -1,0 +1,15 @@
+// TODO: better responsiveness :)
+
+$mobile-breakpoint: 450px
+$tablet-breakpoint: 850px
+
+.location-container
+  width: 33vw
+
+  @media(max-width: $mobile-breakpoint)
+    width: 100%
+
+  @media(min-width: $mobile-breakpoint + 1) and (max-width: $tablet-breakpoint)
+    width: 49%
+
+  border: dotted 2px green
