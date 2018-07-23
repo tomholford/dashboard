@@ -1,7 +1,3 @@
-const node_env = process.env.NODE_ENV;
-
-class Environment {
-  static get NODE_ENV() {
-    return node_env;
-  }
-}
+export const NODE_ENV = process.env.NODE_ENV;
+export const DEVELOPMENT = process.env.NODE_ENV === 'development';
+export const PRODUCTION = process.env.NODE_ENV === 'production';

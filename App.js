@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 import { observer, Provider } from 'mobx-react';
 import { hot } from 'react-hot-loader';
-import Environment from './utils/Environment';
+import * as Environment from './utils/Environment';
 import Locations from './components/Locations/Locations';
 import LocationStore from './stores/LocationStore';
 import WeatherService from './services/WeatherService';
 import './App.sass';
 
-const appDebugClass = () => {
-  console.log(process);
-  console.log(process.env);
-  console.log(Environment);
-  console.log(Environment.NODE_ENV);
-  return Array.from(Environment.NODE_ENV === 'development' && ["debug"]);
-  // return 'debug'
+const appClass = () => {
+  return [
+    "app-container",
+    Array.from(Environment.DEVELOPMENT && ["debug"])
+  ].join(" ")
 }
 
 @observer
@@ -28,10 +26,7 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <div className={[
-                 "app-container",
-                 appDebugClass()
-                ].join(" ")} >
+        <div className={appClass()} >
           <Locations />
         </div>
       </Provider>

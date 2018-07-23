@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "NODE_ENV='development' parcel index.html",
-    "build": "NODE_ENV='production' parcel build index.html --public-url ./",
+    "build": "NODE_ENV='production' parcel build index.html --public-url ./ --detailed-report",
     "deploy": "firebase deploy"
   },
   "dependencies": {
