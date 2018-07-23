@@ -83,11 +83,9 @@ class WeatherForecastChart extends React.Component {
             colors={COLORS}
             title=''
           />
-          <span>days: </span>
-          <hr/>
           <div className="chart-button-container">
             {RANGE_OPTIONS.map((r) => {
-              return <button key={r} onClick={() => this.updateDatasets(r)}>{r / 8}</button>
+              return <button className="widget-button" key={r} onClick={() => this.updateDatasets(r)}>{r / 8}</button>
             })}
           </div>
         </div>

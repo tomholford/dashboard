@@ -34,8 +34,8 @@ class WeatherView extends React.Component {
         <WeatherCurrent location={location} />
         <WeatherForecast location={location} />
         <div className="weather-view-button-container">
-          <button className="weather-view-button" onClick={() => this.removeLocation()}>X</button>
-          <button className="weather-view-button" onClick={() => this.toggleForecastChart()}>more</button>
+          <button className="widget-button" onClick={() => this.removeLocation()}>X</button>
+          <button className="widget-button" onClick={() => this.toggleForecastChart()}>more</button>
         </div>
         <WeatherForecastChart location={location} />
       </div>

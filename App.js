@@ -8,6 +8,8 @@ import WeatherService from './services/WeatherService';
 import './App.sass';
 
 const appDebugClass = () => {
+  console.log(process);
+  console.log(process.env);
   console.log(Environment);
   console.log(Environment.NODE_ENV);
   return Array.from(Environment.NODE_ENV === 'development' && ["debug"]);
