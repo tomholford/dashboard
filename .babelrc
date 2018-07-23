@@ -1,6 +1,7 @@
 {
   "presets": ["react-app"],
   "plugins": [
+    "transform-inline-environment-variables",
     "react-hot-loader/babel",
     "transform-decorators-legacy",
     "transform-class-properties"
