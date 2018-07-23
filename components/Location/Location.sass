@@ -2,14 +2,22 @@
 
 $mobile-breakpoint: 450px
 $tablet-breakpoint: 850px
+$desktop-breakpoimt: 1400px
 
 .location-container
   width: 33vw
 
+  // phone
   @media(max-width: $mobile-breakpoint)
     width: 100%
 
+  // tablet
   @media(min-width: $mobile-breakpoint + 1) and (max-width: $tablet-breakpoint)
     width: 49%
 
-  border: dotted 2px green
+  //desktop
+  @media(min-width: $tablet-breakpoint + 1)
+    width: $desktop-breakpoimt / 3
+
+  .debug
+    border: dotted 2px green
