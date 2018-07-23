@@ -23,11 +23,7 @@ class WeatherView extends React.Component {
   toggleForecastChart = () => {
     const location = this.props.location;
 
-    console.log(`toggle: ${location.name}`)
-
     this.store.toggleForecastChart(location);
-
-    console.log(`value: ${location.showForecastChart}`)
   }
 
   render() {

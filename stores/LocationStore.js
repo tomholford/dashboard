@@ -103,9 +103,7 @@ class LocationStore {
   toggleForecastChart = (location) => {
     const index = this.locations.indexOf(location);
     let found = this.locations[index];
-    console.log(`storetoggle: ${found.name}`)
     found.showForecastChart = !found.showForecastChart;
-    console.log(`storevalue: ${found.showForecastChart}`)
   }
 
   locationCache = (location, key) => {
