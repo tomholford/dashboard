@@ -94,7 +94,6 @@ class LocationStore {
 
       if(this.shouldUseCached(location, 'forecast')) {
         // do nothing
-        console.log(`forecast cached: ${location.name}`);
         if(Environment.DEVELOPMENT) {
           console.log(`forecast cached: ${location.name}`);
         }
