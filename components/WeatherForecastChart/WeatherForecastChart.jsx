@@ -53,7 +53,8 @@ class WeatherForecastChart extends React.Component {
 
     this.state = {
       datasets: buildDatasets(forecast.list, FORECAST_RANGE),
-      labels: labelDataset(forecast.list, FORECAST_RANGE)
+      labels: labelDataset(forecast.list, FORECAST_RANGE),
+      selectedRange: FORECAST_RANGE
     };
   }
 
@@ -63,8 +64,14 @@ class WeatherForecastChart extends React.Component {
     this.setState({
       datasets: buildDatasets(forecast.list, range),
       labels: labelDataset(forecast.list, range),
+      selectedRange: range
     });
   }
+
+  selectedCss = (currentRange) => {
+    return this.state.selectedRange === currentRange ? 'selected' : '';
+  }
+
 
   render() {
     const location = this.props.location;
@@ -85,7 +92,10 @@ class WeatherForecastChart extends React.Component {
           />
           <div className="chart-button-container">
             {RANGE_OPTIONS.map((r) => {
-              return <button className="widget-button" key={r} onClick={() => this.updateDatasets(r)}>{r / 8}</button>
+              return <button className={["widget-button", this.selectedCss(r)].join(' ')}
+                             key={r}
+                             onClick={() => this.updateDatasets(r)}>{r / 8}
+                     </button>
             })}
           </div>
         </div>
