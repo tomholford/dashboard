@@ -1,17 +1,3 @@
-.weather-container
-  position: relative
-
-.weather-container::after
-  content: ""
-  display: block
-  padding-bottom: 100%
-
-.content-container
-  background-color: #fff
-  position: absolute
-  width: 100%
-  height: 100%
-
 h3.current-temp
   font-size: 2.5em
   text-align: center
@@ -19,8 +5,7 @@ h3.current-temp
   font-weight: normal
 
 
-.top-tab-container
-  border-bottom: 1px solid #c7c7c7
+div.top-tab-container
 
   h2
     margin: 0
@@ -28,10 +13,19 @@ h3.current-temp
     text-transform: uppercase
     font-weight: normal
 
-.conditions-container
-  display: flex
-  align-items: center
-  justify-content: center
+  div.conditions-container
+    display: flex
+    flex-flow: row nowrap
+    align-items: center
+    justify-content: flex-start
+    border-bottom: 1px solid #c7c7c7
 
-  div
-    font-size: 0.9em
+    div
+      flex: 2
+      text-align: left
+      font-size: 0.9em
+
+.widget-section-container
+  display: flex
+  justify-content: flex-start
+  flex-flow: row wrap

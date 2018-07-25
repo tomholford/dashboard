@@ -33,17 +33,15 @@ class WeatherCurrent extends React.Component {
       let currentTemperature = Math.round(current.main.temp);
 
       return (
-        <div className="weather-container">
-          <div className="content-container">
-            <div className="top-tab-container">
-              <h2>Weather</h2>
-            </div>
+        <div>
+          <div className="top-tab-container">
+            <h2 className="city-name">{cityName}</h2>
             <div className="conditions-container">
-              <div>{this.capitalizeWords(description)}</div>
               <img src={this.iconUrl()} alt=""/>
+              <div>{this.capitalizeWords(description)}</div>
             </div>
-            <h3 className="current-temp">{currentTemperature}&#176;{unitDivider}</h3>
           </div>
+          <h3 className="current-temp">{currentTemperature} {unitDivider}</h3>
         </div>
       );
     }
