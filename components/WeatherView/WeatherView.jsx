@@ -13,7 +13,7 @@ class WeatherView extends React.Component {
     const location = this.props.location;
 
     return(
-      <div className="weather-view-container widget-box">
+      <div className="weather-container widget-box">
         <WeatherCurrent location={location} />
       </div>
     );

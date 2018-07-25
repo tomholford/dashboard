@@ -40,19 +40,27 @@ class WeatherForecast extends React.Component {
       const forecastHigh = Math.round(forecast.list[0].main.temp_max);
 
       return (
-        <div>
-          <div className="forecast-container">
-            <div className="forecast">
-              <p>{forecastLow} {unitDivider}</p>
+        <div className="widget-outer-container">
+          <div className="contents-container">
+            <div className="top-tab-container">
+              <h2>FORECAST</h2>
             </div>
-            <div className="forecast">
-              <p>{forecastHigh} {unitDivider}</p>
+            <div className="forecast-container">
+              <div className="forecast">
+                <p>{forecastLow} {unitDivider}</p>
+              </div>
+              <div className="forecast">
+                <p>{forecastHigh} {unitDivider}</p>
+              </div>
+            </div>
+            <div className="weather-forecast-button-container">
+              <button className="widget-button" onClick={() => this.toggleForecastChart()}>more</button>
+            </div>
+            <WeatherForecastChart location={location} />
+            <div className="location-button-container">
+              <button className="widget-button" onClick={() => this.removeLocation()}>X</button>
             </div>
           </div>
-          <div className="weather-forecast-button-container">
-            <button className="widget-button" onClick={() => this.toggleForecastChart()}>more</button>
-          </div>
-          <WeatherForecastChart location={location} />
         </div>
       );
     }
