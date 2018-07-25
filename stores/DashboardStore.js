@@ -1,7 +1,7 @@
 import { action, observable, reaction } from 'mobx';
 import { computed } from 'mobx-react';
 import * as Environment from '../utils/Environment';
-import AutoStore from '../utils/AutoStore';
+import AutoStorage from '../utils/AutoStorage';
 import Location from '../models/Location';
 
 const TTL = 60 * 60 * 1000; /* 60 minutes, in ms */
@@ -31,12 +31,18 @@ const DEFAULT_STORE = {
   ]
 };
 
-class LocationStore {
+initializeSettings = () => {
+  const showDebugCss = Environment.DEVELOPMENT;
+  this.settings['showDebugCss'] = showDebugCss;
+}
+
+class DashboardStore {
 	@observable locations = [];
+	@observable settings = {};
 
 	static initialize = function(weatherApi) {
     const store = new this(weatherApi);
-    AutoStore(store, 'dashboardStore', DEFAULT_STORE);
+    AutoStorage(store, 'dashboardStore', DEFAULT_STORE);
 
     store.loadData();
     return store;
@@ -44,6 +50,7 @@ class LocationStore {
 
   constructor(weatherApi) {
     this.weatherApi = weatherApi;
+    this.settings = initializeSettings();
   }
 
   @action
@@ -115,6 +122,11 @@ class LocationStore {
     found.showForecastChart = !found.showForecastChart;
   }
 
+  @action
+  toggleDebugCss = () => {
+    this.settings['showDebugCss'] = !this.settings['showDebugCss'];
+  }
+
   shouldUseCached = (location, key) => {
     if(key in location && location[key]){
       return !this.isLocationDataStale(location, key);
@@ -143,4 +155,4 @@ class LocationStore {
   }
 }
 
-export default LocationStore;
+export default DashboardStore;

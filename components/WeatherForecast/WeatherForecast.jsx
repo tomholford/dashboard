@@ -1,10 +1,20 @@
 import React from 'react';
-import Units from '../../utils/Units';
+import { inject, observer } from 'mobx-react';
+import WeatherForecastChart from '../WeatherForecastChart/WeatherForecastChart';
 import './WeatherForecast.sass';
 
+@inject('store')
+@observer
 class WeatherForecast extends React.Component {
   constructor(props) {
     super(props);
+    this.store = this.props.store;
+  }
+
+  toggleForecastChart = () => {
+    const location = this.props.location;
+
+    this.store.toggleForecastChart(location);
   }
 
   render() {
@@ -39,6 +49,10 @@ class WeatherForecast extends React.Component {
               <p>{forecastHigh} {unitDivider}</p>
             </div>
           </div>
+          <div className="weather-forecast-button-container">
+            <button className="widget-button" onClick={() => this.toggleForecastChart()}>more</button>
+          </div>
+          <WeatherForecastChart location={location} />
         </div>
       );
     }

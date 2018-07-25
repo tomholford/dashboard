@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject } from 'mobx-react';
-import LocationStore from '../../stores/LocationStore';
+import DashboardStore from '../../stores/DashboardStore';
 
 import './WeatherCreate.sass'
 

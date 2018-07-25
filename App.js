@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
+import { computed } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 import { hot } from 'react-hot-loader';
 import * as Environment from './utils/Environment';
+import Debug from './components/Debug/Debug';
 import Locations from './components/Locations/Locations';
-import LocationStore from './stores/LocationStore';
+import DashboardStore from './stores/DashboardStore';
 import WeatherService from './services/WeatherService';
 import './App.sass';
 
-const appClass = () => {
-  return [
-    "app-container",
-    Array.from(Environment.DEVELOPMENT && ["debug"])
-  ].join(" ")
+const showDebug = () => {
+  return Environment.DEVELOPMENT;
 }
 
 @observer
 class App extends Component {
   constructor(props) {
     super(props);
-    this.store = LocationStore.initialize(WeatherService);
+    this.store = DashboardStore.initialize(WeatherService);
+  }
+
+  @computed
+  get appClass() {
+    return [
+      "app-container",
+      Array.from(this.store.showDebugCss && ["debug"])
+    ].join(" ");
   }
 
   render() {
@@ -26,9 +33,12 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <div className={appClass()} >
-          <Locations />
-        </div>
+        <React.Fragment>
+          <div className={this.appClass} >
+            <Locations />
+          </div>
+          {showDebug() && <Debug />}
+        </React.Fragment>
       </Provider>
     );
   }
