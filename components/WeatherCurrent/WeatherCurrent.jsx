@@ -15,8 +15,8 @@ class WeatherCurrent extends React.Component {
   }
 
   capitalizeWords(str) {
-    return str.replace(/\w\S*/g, function(txt){
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    return str.replace(/\w\S*/g, function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   }
 
@@ -24,7 +24,7 @@ class WeatherCurrent extends React.Component {
     const location = this.props.location;
     const current = location.current;
 
-    if(!current) {
+    if (!current) {
       return (<div>Loading...</div>);
     } else {
       let cityName = current.name;
@@ -32,18 +32,18 @@ class WeatherCurrent extends React.Component {
       let description = current.weather[0].description;
       let currentTemperature = Math.round(current.main.temp);
 
-      return (
-        <div>
+      return (<div className="weather-container">
+        <div className="content-container">
           <div className="top-tab-container">
-            <h2 className="city-name">{cityName}</h2>
-            <div className="conditions-container">
-              <img src={this.iconUrl()} alt=""/>
-              <div>{this.capitalizeWords(description)}</div>
-            </div>
+            <h2>Weather</h2>
           </div>
-          <h3 className="current-temp">{currentTemperature} {unitDivider}</h3>
+          <div className="conditions-container">
+            <div>{this.capitalizeWords(description)}</div>
+            <img src={this.iconUrl()} alt=""/>
+          </div>
+          <h3 className="current-temp">{currentTemperature}&#176;{unitDivider}</h3>
         </div>
-      );
+      </div>);
     }
   }
 }

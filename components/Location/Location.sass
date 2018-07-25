@@ -1,20 +1,10 @@
-// TODO: better responsiveness :)
-
-$mobile-breakpoint: 450px
-$tablet-breakpoint: 850px
-$desktop-breakpoimt: 1400px
-
 .location-container
   width: 33vw
 
-  // phone
-  @media(max-width: $mobile-breakpoint)
-    width: 100%
+.location-button-container
+  display: flex
+  flex-flow: row nowrap
+  justify-content: space-between
 
-  // tablet
-  @media(min-width: $mobile-breakpoint + 1) and (max-width: $tablet-breakpoint)
-    width: 49%
-
-  //desktop
-  @media(min-width: $tablet-breakpoint + 1)
-    width: $desktop-breakpoimt / 3
+  button
+    align-self: flex-end
