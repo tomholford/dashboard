@@ -1,5 +1,4 @@
-import { action, observable, reaction } from 'mobx';
-import { computed } from 'mobx-react';
+import { action, computed, observable, reaction } from 'mobx';
 import * as Environment from '../utils/Environment';
 import AutoStorage from '../utils/AutoStorage';
 import Location from '../models/Location';
@@ -31,11 +30,6 @@ const DEFAULT_STORE = {
   ]
 };
 
-initializeSettings = () => {
-  const showDebugCss = Environment.DEVELOPMENT;
-  this.settings['showDebugCss'] = showDebugCss;
-}
-
 class DashboardStore {
 	@observable locations = [];
 	@observable settings = {};
@@ -50,7 +44,7 @@ class DashboardStore {
 
   constructor(weatherApi) {
     this.weatherApi = weatherApi;
-    this.settings = initializeSettings();
+    this.settings = { showDebugCss: false };
   }
 
   @action
@@ -125,6 +119,11 @@ class DashboardStore {
   @action
   toggleDebugCss = () => {
     this.settings['showDebugCss'] = !this.settings['showDebugCss'];
+  }
+
+  @computed
+  get showDebugCss() {
+    return this.settings['showDebugCss'];
   }
 
   shouldUseCached = (location, key) => {
