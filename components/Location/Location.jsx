@@ -24,9 +24,8 @@ class Location extends React.Component {
       <div className="location-container">
         <WeatherView location={location} />
         <Clock location={location}/>
-        <WeatherForecast location={location} />
-        <div className="location-button-container">
-          <button className="widget-button" onClick={() => this.removeLocation()}>X</button>
+        <div className="weather-forecast-container widget-box">
+          <WeatherForecast location={location} />
         </div>
       </div>
     );

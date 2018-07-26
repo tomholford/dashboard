@@ -33,7 +33,14 @@ class Clock extends React.Component {
   render() {
     return (
       <div className="clock-container widget-box">
-        <h4>{this.formattedDate()}</h4>
+        <div className="widget-outer-container">
+          <div className="contents-container">
+            <div className="top-tab-container">
+              <h2>Time</h2>
+            </div>
+            <h4>{this.formattedDate()}</h4>
+          </div>
+        </div>
       </div>
     );
   }
