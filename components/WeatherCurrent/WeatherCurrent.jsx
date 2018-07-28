@@ -33,6 +33,8 @@ class WeatherCurrent extends React.Component {
       let currentTemperature = Math.round(current.main.temp);
 
       return (
+      <div className="weather-container widget-box">
+        <h3 className="current-temp">{currentTemperature}&#176;{unitDivider}</h3>
         <div className="widget-outer-container">
           <div className="contents-container">
             <div className="top-tab-container">
@@ -42,9 +44,9 @@ class WeatherCurrent extends React.Component {
               <div>{this.capitalizeWords(description)}</div>
               <img src={this.iconUrl()} alt=""/>
             </div>
-            <h3 className="current-temp">{currentTemperature}&#176;{unitDivider}</h3>
           </div>
         </div>
+      </div>
       );
     }
   }

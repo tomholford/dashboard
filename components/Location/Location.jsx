@@ -21,11 +21,14 @@ class Location extends React.Component {
     const location = this.props.location;
 
     return(
-      <div className="location-container">
-        <WeatherView location={location} />
-        <Clock location={location}/>
-        <div className="weather-forecast-container widget-box">
-          <WeatherForecast location={location} />
+      <div>
+        <h1>{location.name}</h1>
+        <div className="location-container">
+          <WeatherView location={location} />
+          <Clock location={location}/>
+          <div className="weather-forecast-container widget-box">
+            <WeatherForecast location={location} />
+          </div>
         </div>
       </div>
     );
