@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import WeatherView from '../WeatherView/WeatherView';
 import WeatherForecast from '../WeatherForecast/WeatherForecast';
 import Clock from '../Clock/Clock';
+import Headlines from '../Headlines/Headlines';
 import './Location.sass'
 
 @observer
@@ -26,9 +27,8 @@ class Location extends React.Component {
         <div className="location-container">
           <WeatherView location={location} />
           <Clock location={location}/>
-          <div className="weather-forecast-container widget-box">
-            <WeatherForecast location={location} />
-          </div>
+          <WeatherForecast location={location} />
+          <Headlines location={location} />
         </div>
       </div>
     );

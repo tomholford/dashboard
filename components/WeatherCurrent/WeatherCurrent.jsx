@@ -4,10 +4,6 @@ import Units from '../../utils/Units';
 import './WeatherCurrent.sass'
 
 class WeatherCurrent extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   iconUrl() {
     const current = this.props.location.current;
 

@@ -34,16 +34,17 @@ class DashboardStore {
 	@observable locations = [];
 	@observable settings = {};
 
-	static initialize = function(weatherApi) {
-    const store = new this(weatherApi);
+	static initialize = function(weatherApi, rssApi) {
+    const store = new this(weatherApi, rssApi);
     AutoStorage(store, 'dashboardStore', DEFAULT_STORE);
 
     store.loadData();
     return store;
 	}
 
-  constructor(weatherApi) {
+  constructor(weatherApi, rssApi) {
     this.weatherApi = weatherApi;
+    this.rssApi = rssApi;
     this.settings = { showDebugCss: false };
   }
 
@@ -68,7 +69,7 @@ class DashboardStore {
     const index = this.locations.indexOf(location);
     let found = this.locations[index];
 
-    // since forecast response doesn't have timestamp, add it ourselves :)
+    // if response doesn't have timestamp, add it ourselves :)
     if(!('dt' in data)) {
       data['dt'] = Math.round((new Date).getTime() / 1000);
     }
@@ -79,6 +80,7 @@ class DashboardStore {
   @action
   loadData = () => {
     this.locations.forEach((location) => {
+      // current
       if(this.shouldUseCached(location, 'current')) {
         // do nothing
         if(Environment.DEVELOPMENT) {
@@ -93,6 +95,7 @@ class DashboardStore {
         })
       }
 
+      // forecast
       if(this.shouldUseCached(location, 'forecast')) {
         // do nothing
         if(Environment.DEVELOPMENT) {
@@ -105,6 +108,26 @@ class DashboardStore {
         this.weatherApi.getForecast(location).then((data) => {
           this.addResponse(location, 'forecast', data);
         })
+      }
+
+      // headlines
+      if(this.shouldUseCached(location, 'headlines')) {
+        // do nothing
+        if(Environment.DEVELOPMENT) {
+          console.log(`headlines cached: ${location.name}`);
+        }
+      } else {
+        if(Environment.DEVELOPMENT) {
+          console.log(`headlines api call: ${location.name}`);
+        }
+        this.rssApi.getFeed('https://www.sfgate.com/bayarea/feed/Bay-Area-News-429.php', (err, data) => {
+          if(!err) {
+            console.log(data);
+            this.addResponse(location, 'headlines', data);
+          } else {
+            console.error(err);
+          }
+        });
       }
     })
   }
