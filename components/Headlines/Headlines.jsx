@@ -51,10 +51,6 @@ class Headlines extends React.Component {
     const location = this.props.location;
     const headlines = location.headlines;
 
-    if(!('items' in headlines)) {
-      return;
-    }
-
     if (!headlines) {
       return (<div>Loading...</div>);
     } else {

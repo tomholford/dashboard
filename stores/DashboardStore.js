@@ -2,33 +2,10 @@ import { action, computed, observable, reaction } from 'mobx';
 import * as Environment from '../utils/Environment';
 import AutoStorage from '../utils/AutoStorage';
 import Location from '../models/Location';
+import { defaults } from '../data/defaults.json';
 
 const TTL = 60 * 60 * 1000; /* 60 minutes, in ms */
-const DEFAULT_STORE = {
-  "locations": [
-    {
-      "id": 1850144,
-      "unit": "C",
-      "locale": "ja-JP",
-      "timezone": "Asia/Tokyo",
-      "name": "Tokyo",
-    },
-    {
-      "id": 5391959,
-      "unit": "F",
-      "locale": "en-US",
-      "timezone": "America/Los_Angeles",
-      "name": "San Francisco",
-    },
-    {
-      "id": 3117732,
-      "unit": "C",
-      "locale": "es-SP",
-      "timezone": "Europe/Madrid",
-      "name": "Madrid",
-    }
-  ]
-};
+const DEFAULT_STORE = defaults;
 
 class DashboardStore {
 	@observable locations = [];
@@ -120,7 +97,7 @@ class DashboardStore {
         if(Environment.DEVELOPMENT) {
           console.log(`headlines api call: ${location.name}`);
         }
-        this.rssApi.getFeed('https://www.sfgate.com/bayarea/feed/Bay-Area-News-429.php', (err, data) => {
+        this.rssApi.getFeed(location.headlinesUrl, (err, data) => {
           if(!err) {
             console.log(data);
             this.addResponse(location, 'headlines', data);
