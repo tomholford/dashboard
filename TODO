@@ -7,3 +7,10 @@ root store: ui store, location stores
 persist state all in store (remove api calls in leaf widgets)
 toggle locale, f / c, etc.
 stub city api with json-servre, q endpoint, debounced
+
+
+editable widgets?
+
+widget base component:
+ - draggable
+ - expose loading state
