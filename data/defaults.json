@@ -1,0 +1,30 @@
+{
+  "defaults": {
+    "locations": [
+      {
+        "id": 1850144,
+        "unit": "C",
+        "locale": "ja-JP",
+        "timezone": "Asia/Tokyo",
+        "name": "Tokyo",
+        "headlinesUrl": "https://www.tokyoreporter.com/feed/"
+      },
+      {
+        "id": 5391959,
+        "unit": "F",
+        "locale": "en-US",
+        "timezone": "America/Los_Angeles",
+        "name": "San Francisco",
+        "headlinesUrl": "https://www.sfgate.com/bayarea/feed/Bay-Area-News-429.php"
+      },
+      {
+        "id": 3117732,
+        "unit": "C",
+        "locale": "es-SP",
+        "timezone": "Europe/Madrid",
+        "name": "Madrid",
+        "headlinesUrl": "https://www.thelocal.es/feeds/rss.php"
+      }
+    ]
+  }
+}

@@ -6,6 +6,7 @@ import * as Environment from './utils/Environment';
 import Debug from './components/Debug/Debug';
 import Locations from './components/Locations/Locations';
 import DashboardStore from './stores/DashboardStore';
+import RssService from './services/RssService';
 import WeatherService from './services/WeatherService';
 import './App.sass';
 
@@ -17,7 +18,7 @@ const showDebug = () => {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.store = DashboardStore.initialize(WeatherService);
+    this.store = DashboardStore.initialize(WeatherService, RssService);
   }
 
   @computed
