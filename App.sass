@@ -1,3 +1,7 @@
+//override bootstrap
+.row
+  margin: 0 !important
+
 body
   margin: 0
 
@@ -38,9 +42,16 @@ body
 
 .widget-box
   width: 25%
+  max-width: 375px
+  margin: 0 auto
   background-color: #fefefe
   display: flex
   flex-flow: column nowrap
+
+.widget-box::after
+  content: ""
+  display: block
+  padding-bottom: 100%
 
 .widget-outer-container
   position: relative
