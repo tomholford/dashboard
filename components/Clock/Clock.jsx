@@ -32,13 +32,13 @@ class Clock extends React.Component {
 
   render() {
     return (
-      <div className="clock-container widget-box">
+      <div className="clock-container widget-box col-md-3 col-sm-6 col-xs-12">
+        <h4>{this.formattedDate()}</h4>
         <div className="widget-outer-container">
           <div className="contents-container">
             <div className="top-tab-container">
               <h2>Time</h2>
             </div>
-            <h4>{this.formattedDate()}</h4>
           </div>
         </div>
       </div>

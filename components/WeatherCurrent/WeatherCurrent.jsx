@@ -33,7 +33,7 @@ class WeatherCurrent extends React.Component {
       let currentTemperature = Math.round(current.main.temp);
 
       return (
-      <div className="weather-container widget-box">
+      <div className="weather-container widget-box col-md-3 col-sm-6 col-xs-12">
         <h3 className="current-temp">{currentTemperature}&#176;{unitDivider}</h3>
         <div className="widget-outer-container">
           <div className="contents-container">
