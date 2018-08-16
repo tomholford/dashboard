@@ -31,7 +31,7 @@ class WeatherForecast extends React.Component {
       const forecastHigh = Math.round(forecast.list[0].main.temp_max);
 
       return (
-        <div className="widget-box">
+        <div className="weather-forecast-container widget-box col-md-3 col-sm-6 col-xs-12">
           <div className="widget-outer-container">
             <div className="contents-container">
               <div className="top-tab-container">

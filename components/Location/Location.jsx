@@ -22,9 +22,9 @@ class Location extends React.Component {
     const location = this.props.location;
 
     return(
-      <div>
+      <div className="location-container row">
         <h1>{location.name}</h1>
-        <div className="location-container">
+        <div className="location-container row">
           <WeatherView location={location} />
           <Clock location={location}/>
           <WeatherForecast location={location} />
