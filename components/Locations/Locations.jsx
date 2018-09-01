@@ -6,10 +6,6 @@ import './Locations.sass'
 @inject('store')
 @observer
 class Locations extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const locations = this.props.store.locations;
 

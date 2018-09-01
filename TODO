@@ -14,3 +14,9 @@ editable widgets?
 widget base component:
  - draggable
  - expose loading state
+
+
+https://jisho.org/api/v1/search/words?keyword=house
+
+jisho api widgets
+bookmarks widget

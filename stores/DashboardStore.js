@@ -117,13 +117,18 @@ class DashboardStore {
   }
 
   @action
-  toggleDebugCss = () => {
-    this.settings['showDebugCss'] = !this.settings['showDebugCss'];
+  toggleSetting = (settingKey) => {
+    this.settings[settingKey] = !this.settings[settingKey];
   }
 
+	@action
+	updateSetting = (key, value) => {
+		this.settings[key] = value;
+	}
+
   @computed
-  get showDebugCss() {
-    return this.settings['showDebugCss'];
+  get settingsMenuVisible() {
+    return this.settings['settingsMenuVisible'];
   }
 
   shouldUseCached = (location, key) => {
