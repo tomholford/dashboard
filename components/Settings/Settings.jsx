@@ -11,12 +11,17 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.store = this.props.store;
-    console.log(this.settings);
     ReactModal.setAppElement('#root');
   }
 
   toggleSettingsMenu = () => {
     this.store.toggleSetting('settingsMenuVisible');
+  }
+
+
+  reset = () => {
+    localStorage.clear();
+    location.reload();
   }
 
   @computed
@@ -62,7 +67,10 @@ class Settings extends React.Component {
           isOpen={this.settingsMenuVisible}
           style={this.modalStyle}>
           <div className="modal-content-container">
-            <button className="widget-button" onClick={() => this.toggleSettingsMenu()}>close</button>
+            <div className="modal-button-container">
+              <button className="widget-button" onClick={() => this.reset()}>reset</button>
+              <button className="widget-button" onClick={() => this.toggleSettingsMenu()}>close</button>
+            </div>
             <div className="settings-list">
               {Object.keys(this.settings).map((k) => {
                 return <div className="setting-item" key={k}>
