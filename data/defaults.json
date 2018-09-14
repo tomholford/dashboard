@@ -25,6 +25,9 @@
         "name": "Madrid",
         "headlinesUrl": "https://www.thelocal.es/feeds/rss.php"
       }
-    ]
+    ],
+    "settings":  {
+      "settingsMenuVisible": false
+    }
   }
 }

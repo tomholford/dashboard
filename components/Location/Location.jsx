@@ -8,10 +8,6 @@ import './Location.sass'
 
 @observer
 class Location extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   removeLocation = () => {
     const location = this.props.location;
 

@@ -15,10 +15,23 @@ Let's say one friend is living in Tokyo and the other in San Francisco; whenever
 * Articles (Drudge, Japan Today, etc)
 * Word of the day (different languages)
 
-## Setup
+## Develop
+
+[Yarn](https://yarnpkg.com/en/)and [Parcel](https://parceljs.org/) are used for development and deployment.
 
 ```bash
 yarn global add parcel-bundler
 yarn # install deps
 yarn start # start dev server, visit the link shown in terminal
 ```
+
+## Deploy
+
+By default, the `yarn deploy` command is configured to deploy to [Firebase](https://www.firebase.com).
+
+```bash
+yarn build # optimized for production
+yarn deploy # deploy to your hosting provider
+```
+
+## Contributing

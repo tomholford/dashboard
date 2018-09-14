@@ -1,0 +1,43 @@
+// Settings.sass
+$phone: 601px
+$tablet: 1024px
+
+.modal-content-container
+  display: flex
+  flex-flow: column nowrap
+  justify-content: space-between
+  height: 100%
+
+.modal-button-container
+  display: flex
+  flex-flow: row nowrap
+  justify-content: flex-end
+
+.app-info
+  display: flex
+  flex-flow: row nowrap
+  justify-content: space-around
+  opacity: 0.8
+
+  div
+    font-size: 12px
+    @media(max-width: $phone)
+      display: flex
+      flex-flow: column nowrap
+      align-items: center
+
+
+  span
+    text-transform: uppercase
+    color: rgba(0,0,0,0.5)
+
+.ReactModal__Content.ReactModal__Content--after-open
+  @media(max-width: $phone)
+    left: 5% !important
+    right: 5% !important
+    top: 5% !important
+    bottom: 5% !important
+
+  @media(min-width: $tablet)
+    left: 30% !important
+    right: 30% !important

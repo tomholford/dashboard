@@ -1,7 +1,8 @@
 import RequestService from './RequestService';
+import * as Environment from '../utils/Environment';
 import Units from '../utils/Units'
 
-const API_KEY = '16793c2cd11658bc4be9dc7d5fa5c848'
+const API_KEY = Environment.WEATHER_API_KEY;
 
 class WeatherService {
 
@@ -10,7 +11,7 @@ class WeatherService {
     const units = Units.toSystem(location.units);
 
     var url = `https://api.openweathermap.org/data/2.5/weather?id=${locationId}&units=${units}&appid=${API_KEY}`;
-    return RequestService.getRequest(url)
+    return RequestService.getRequest(url);
   }
 
   static getForecast(location){

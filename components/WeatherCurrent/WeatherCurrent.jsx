@@ -1,13 +1,12 @@
 import React from 'react';
+import { computed } from 'mobx';
 import Units from '../../utils/Units';
 
 import './WeatherCurrent.sass'
 
 class WeatherCurrent extends React.Component {
   iconUrl() {
-    const current = this.props.location.current;
-
-    return `http://openweathermap.org/img/w/${current.weather[0].icon}.png`;
+    return `http://openweathermap.org/img/w/${this.current.weather[0].icon}.png`;
   }
 
   capitalizeWords(str) {
@@ -16,9 +15,13 @@ class WeatherCurrent extends React.Component {
     });
   }
 
+  @computed
+  get current() {
+    return this.props.location.current;
+  }
+
   render() {
-    const location = this.props.location;
-    const current = location.current;
+    const current = this.current;
 
     if (!current) {
       return (<div>Loading...</div>);
