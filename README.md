@@ -35,3 +35,7 @@ yarn deploy # deploy to your hosting provider
 ```
 
 ## Contributing
+
+* Fork this repo
+* Hack hack hack
+* Open a PR :)
