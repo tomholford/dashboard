@@ -14,8 +14,8 @@
     "node-sass": "^4.7.2"
   },
   "scripts": {
-    "start": "NODE_ENV='development' REVISION=$(git rev-parse --short HEAD) BUILT_AT=$(date +%s) parcel index.html",
-    "build": "NODE_ENV='production' REVISION=$(git rev-parse --short HEAD) BUILT_AT=$(date +%s) parcel build index.html --public-url ./ --detailed-report",
+    "start": "NODE_ENV='development' REVISION=$(git rev-parse --short HEAD) BUILT_AT=$(date +%s) WEATHER_API_KEY=$(cat secrets/WEATHER_API_KEY) parcel index.html",
+    "build": "NODE_ENV='production' REVISION=$(git rev-parse --short HEAD) BUILT_AT=$(date +%s) WEATHER_API_KEY=$(cat secrets/WEATHER_API_KEY) parcel build index.html --public-url ./ --detailed-report",
     "deploy": "firebase deploy"
   },
   "dependencies": {
