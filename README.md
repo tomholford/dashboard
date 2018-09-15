@@ -1,5 +1,7 @@
 # Global Friends Dashboard
 
+![image](https://user-images.githubusercontent.com/16504501/45583993-c5e14680-b880-11e8-902e-009d8e5f3d42.png)
+
 With today's technology nothing can keep friends apart. Even if they are located on opposite sides of the world, there are numerous technologies that can put them directly in contact with one another.
 
 Let's say one friend is living in Tokyo and the other in San Francisco; whenever they talk they tend to ask how the weather is, the latest regional news, etc. Instead of repetitively asking for this information directly from each other why not just have a page that puts all this information into one aggregated space - a dashboard!
