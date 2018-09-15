@@ -17,7 +17,7 @@ Let's say one friend is living in Tokyo and the other in San Francisco; whenever
 
 ## Develop
 
-[Yarn](https://yarnpkg.com/en/)and [Parcel](https://parceljs.org/) are used for development and deployment.
+[Yarn](https://yarnpkg.com/en/) and [Parcel](https://parceljs.org/) are used for development and deployment.
 
 ```bash
 yarn global add parcel-bundler
