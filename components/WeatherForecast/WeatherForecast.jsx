@@ -45,13 +45,7 @@ class WeatherForecast extends React.Component {
                   <p>{forecastHigh} {unitDivider}</p>
                 </div>
               </div>
-              <div className="weather-forecast-button-container">
-                <button className="widget-button" onClick={() => this.toggleForecastChart()}>more</button>
-              </div>
               <WeatherForecastChart location={location} />
-              <div className="location-button-container">
-                <button className="widget-button" onClick={() => this.removeLocation()}>X</button>
-              </div>
             </div>
           </div>
         </div>

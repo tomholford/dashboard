@@ -4,13 +4,11 @@ class RequestService {
       method: 'GET',
       cache: 'no-cache'
     };
-    let request = new Request(url);
 
-    let data = await(await(fetch(request, options).then(res => {
-      return res.json();
-    }).catch(err => {
-      console.log('Error: ', err);
-    })))
+    let request = new Request(url);
+    let response = await fetch(request, options);
+    let data = await response.json();
+
     return data;
   }
 }

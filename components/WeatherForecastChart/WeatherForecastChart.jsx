@@ -76,7 +76,7 @@ class WeatherForecastChart extends React.Component {
   render() {
     const location = this.props.location;
 
-    if(location.showForecastChart) {
+    if(location.forecast) {
       return (
         <div className="weather-forecast-chart-container">
           <LineChart

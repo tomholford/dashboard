@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { computed } from 'mobx';
-import { observer, Provider } from 'mobx-react';
 import { hot } from 'react-hot-loader';
+import React, { Component } from 'react';
+import { observer, Provider } from 'mobx-react';
 import Settings from './components/Settings/Settings';
 import Locations from './components/Locations/Locations';
 import DashboardStore from './stores/DashboardStore';

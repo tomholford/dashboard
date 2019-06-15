@@ -1,9 +1,10 @@
 import React from 'react';
 import { computed } from 'mobx';
-import Units from '../../utils/Units';
+import { observer } from 'mobx-react';
 
 import './WeatherCurrent.sass'
 
+@observer
 class WeatherCurrent extends React.Component {
   iconUrl() {
     return `http://openweathermap.org/img/w/${this.current.weather[0].icon}.png`;

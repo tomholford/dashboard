@@ -1,7 +1,8 @@
-import { action, computed, observable, reaction } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import * as Environment from '../utils/Environment';
 import AutoStorage from '../utils/AutoStorage';
 import Location from '../models/Location';
+import LoggerService from '../services/LoggerService';
 import { defaults } from '../data/defaults.json';
 
 const TTL = 60 * 60 * 1000; /* 60 minutes, in ms */
@@ -32,17 +33,10 @@ class DashboardStore {
 	}
 
   @action
-	removeLocation = (location) => {
-    const index = this.locations.indexOf(location);
-    if(index < 0) {
-      return;
-    } else {
-      this.locations.splice(index, 1);
-    }
-	}
-
-  @action
   addResponse = (location, key, data) => {
+    LoggerService.info(`Adding response for ${location.name}:${key}`);
+    LoggerService.debug(`Response for ${location.name}:${key}: ${data.toString()}`);
+
     const index = this.locations.indexOf(location);
     let found = this.locations[index];
 
@@ -56,17 +50,14 @@ class DashboardStore {
 
   @action
   loadData = () => {
+    LoggerService.info('Loading data...');
     this.locations.forEach((location) => {
       // current
       if(this.shouldUseCached(location, 'current')) {
-        // do nothing
-        if(Environment.DEVELOPMENT) {
-          console.log(`current cached: ${location.name}`);
-        }
+        LoggerService.info(`Using Current Weather cache for ${location.name}`);
       } else {
-        if(Environment.DEVELOPMENT) {
-          console.log(`current api call: ${location.name}`);
-        }
+        LoggerService.info(`Current Weather not cached for ${location.name}, querying API...`);
+
         this.weatherApi.getCurrent(location).then((data) => {
           this.addResponse(location, 'current', data);
         })
@@ -74,14 +65,10 @@ class DashboardStore {
 
       // forecast
       if(this.shouldUseCached(location, 'forecast')) {
-        // do nothing
-        if(Environment.DEVELOPMENT) {
-          console.log(`forecast cached: ${location.name}`);
-        }
+        LoggerService.info(`Using Weather Forecast cache for ${location.name}`);
       } else {
-        if(Environment.DEVELOPMENT) {
-          console.log(`forecast api call: ${location.name}`);
-        }
+        LoggerService.info(`Weather Forecast not cached for ${location.name}, querying API...`);
+
         this.weatherApi.getForecast(location).then((data) => {
           this.addResponse(location, 'forecast', data);
         })
@@ -89,31 +76,19 @@ class DashboardStore {
 
       // headlines
       if(this.shouldUseCached(location, 'headlines')) {
-        // do nothing
-        if(Environment.DEVELOPMENT) {
-          console.log(`headlines cached: ${location.name}`);
-        }
+        LoggerService.info(`Using Headlines cache for ${location.name}`);
       } else {
-        if(Environment.DEVELOPMENT) {
-          console.log(`headlines api call: ${location.name}`);
-        }
+        LoggerService.info(`Headlines not cached for ${location.name}, querying API...`);
+
         this.rssApi.getFeed(location.headlinesUrl, (err, data) => {
           if(!err) {
-            console.log(data);
             this.addResponse(location, 'headlines', data);
           } else {
-            console.error(err);
+            LoggerService.error(err);
           }
         });
       }
     })
-  }
-
-  @action
-  toggleForecastChart = (location) => {
-    const index = this.locations.indexOf(location);
-    let found = this.locations[index];
-    found.showForecastChart = !found.showForecastChart;
   }
 
   @action
@@ -132,6 +107,10 @@ class DashboardStore {
   }
 
   shouldUseCached = (location, key) => {
+    LoggerService.debug(`Should Use Cached? ${location.name}:${key}`);
+    LoggerService.debug(`Key in location? (for ${location.name}:${key})  ${key in location}`);
+    LoggerService.debug(`Location keys (for ${location.name}:${key})  ${Object.keys(location).toString()}`);
+
     if(key in location && location[key]){
       return !this.isLocationDataStale(location, key);
     }else{
@@ -149,11 +128,11 @@ class DashboardStore {
     const currentDate = new Date;
     const delta = Math.abs(currentDate - lastUpdated);
     if(Environment.DEVELOPMENT) {
-      console.log(`current date: ${currentDate.toLocaleString()}`);
-      console.log(`${key} last updated: ${lastUpdated.toLocaleString()}`);
-      console.log(`delta: ${delta} ms`);
-      console.log(`ttl: ${ttl} ms`);
-      console.log(`shouldUpdate: ${delta > ttl}`);
+      LoggerService.debug(`current date: ${currentDate.toLocaleString()}`);
+      LoggerService.debug(`${key} last updated: ${lastUpdated.toLocaleString()}`);
+      LoggerService.debug(`delta: ${delta} ms`);
+      LoggerService.debug(`ttl: ${ttl} ms`);
+      LoggerService.debug(`shouldUpdate: ${delta > ttl}`);
     }
     return delta > ttl;
   }

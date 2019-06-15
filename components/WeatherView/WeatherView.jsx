@@ -1,6 +1,5 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react';
-import DashboardStore from '../../stores/DashboardStore';
+import { observer } from 'mobx-react';
 import WeatherCurrent from '../WeatherCurrent/WeatherCurrent';
 import './WeatherView.sass'
 
