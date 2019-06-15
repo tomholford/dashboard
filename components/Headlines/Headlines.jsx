@@ -1,6 +1,7 @@
 import React from 'react';
 import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
+import LoggerService from '../../services/LoggerService';
 import './Headlines.sass';
 
 @observer
@@ -9,17 +10,24 @@ class Headlines extends React.Component {
 
   @action
   previous = () => {
+    LoggerService.debug(`CurrentIndex: ${this.currentIndex}`);
+    LoggerService.debug(`HeadlinesCount: ${this.headlinesCount}`);
+
+
     if(this.currentIndex === 0) {
-      return;
+      this.currentIndex = this.headlinesCount - 1;
     } else {
       this.currentIndex -= 1;
     }
   }
-
+  
   @action
   next = () => {
+    LoggerService.debug(`CurrentIndex: ${this.currentIndex}`);
+    LoggerService.debug(`HeadlinesCount: ${this.headlinesCount}`);
+
     if(this.currentIndex + 1 === this.headlinesCount) {
-      return;
+      this.currentIndex = 0;
     } else {
       this.currentIndex += 1;
     }
@@ -30,7 +38,7 @@ class Headlines extends React.Component {
     const location = this.props.location;
     const headlines = location.headlines;
     if(headlines) {
-      return headlines.length;
+      return headlines.items.length;
     } else {
       return 0;
     }
