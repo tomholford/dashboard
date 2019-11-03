@@ -27,7 +27,6 @@ class WeatherCurrent extends React.Component {
     if (!current) {
       return (<div>Loading...</div>);
     } else {
-      let cityName = current.name;
       let unitDivider = location.unit;
       let description = current.weather[0].description;
       let currentTemperature = Math.round(current.main.temp);
