@@ -80,6 +80,7 @@ class Headlines extends React.Component {
                     </h4>
                   </a>
                 </div>
+                <div className="headlines-empty-container"></div>
                 <div className="headlines-buttons-containers">
                   <button className="widget-button" onClick={() => this.previous()}>&larr;</button>
                   <button className="widget-button" onClick={() => this.next()}>&rarr;</button>
