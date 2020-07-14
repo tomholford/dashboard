@@ -23,7 +23,7 @@
         "locale": "es-SP",
         "timezone": "Europe/Madrid",
         "name": "Madrid",
-        "headlinesUrl": "https://www.thelocal.es/feeds/rss.php"
+        "headlinesUrl": "https://feeds.thelocal.com/rss/es"
       }
     ],
     "settings":  {
