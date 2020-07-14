@@ -7,7 +7,7 @@ import './WeatherCurrent.sass'
 @observer
 class WeatherCurrent extends React.Component {
   iconUrl() {
-    return `http://openweathermap.org/img/w/${this.current.weather[0].icon}.png`;
+    return `https://openweathermap.org/img/w/${this.current.weather[0].icon}.png`;
   }
 
   capitalizeWords(str) {
