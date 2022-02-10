@@ -15,7 +15,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "cssnano": "^4",
-    "node-sass": "^4"
+    "node-sass": "^7"
   },
   "scripts": {
     "debug": "DEBUG='true' NODE_ENV='development' REVISION=$(git rev-parse --short HEAD) BUILT_AT=$(date +%s) WEATHER_API_KEY=$(cat secrets/WEATHER_API_KEY) parcel index.html --log-level 4",
